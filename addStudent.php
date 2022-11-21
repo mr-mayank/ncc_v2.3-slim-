@@ -75,7 +75,6 @@ if (isset($_POST['addStudent'])) {
                 echo "<script>window.open('./signup.php','_self')</script>";
             }
         }
-
     } else {
         echo "<script>alert(`User already exits 🛑\nCheck your mail for login credentials if forgotten and then login to portal.`)</script>";
         echo "<script>window.open('./signup.php','_self')</script>";
