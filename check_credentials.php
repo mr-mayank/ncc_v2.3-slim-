@@ -49,7 +49,7 @@ elseif($user_type=='admin'){
 
         $databasePWD = $userDetails['password'];
         if ($pwd === $databasePWD) {
-            $_SESSION['userId'] = $userDetails['id'];
+            $_SESSION['anoID'] = $userDetails['id'];
             $_SESSION['userType'] = $user_type;
             echo "<script>alert('Successfully Login !!')</script>";
             echo "<script>window.open('./admin_home.php','_self')</script>";

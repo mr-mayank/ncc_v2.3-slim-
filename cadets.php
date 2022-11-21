@@ -1,5 +1,5 @@
 <?php
-session_start();
+include('database/include.php');
 if(!isset($_SESSION['userType'])){
     header("Location: ./signin.php");
 }else{
@@ -109,44 +109,49 @@ if(!isset($_SESSION['userType'])){
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>1234</td>
-                        <td>raman</td>
-                        <td>9090909090</td>
-                        <td>abc@gmail.com</td>
-                        <td><a class="btn text-center mt-3 text-light" style="background-color: #35b729;" href="details.php">View</a></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>1234</td>
-                        <td>raman</td>
-                        <td>9090909090</td>
-                        <td>abc@gmail.com</td>
-                        <td><a class="btn text-center mt-3 text-light" style="background-color: #35b729;" href="details.php">View</a></td>
+                    <?php
+                    $sql = "SELECT * FROM `student_credentials` where `anoID` = '$_SESSION[anoID]'";
+                    $result = mysqli_query($conn, $sql);
+                    $srno = 0;
 
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $srno = $srno + 1;
+                        $sql1 = "SELECT * FROM `personaldetails` where `userID` = '$row[id] '";
+                        $result1 = mysqli_query($conn, $sql1);
+                        if($row['regNo']== NULL){
+                            $regNo = "Not Assigned";
+                        }
+                        else{
+                            $regNo = $row['regNo'];
+                        }
+                        if(mysqli_num_rows($result1) > 0){
+                            $row1 = mysqli_fetch_assoc($result1);
 
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>1234</td>
-                        <td>raman</td>
-                        <td>9090909090</td>
-                        <td>abc@gmail.com</td>
-                        <td><a class="btn text-center mt-3 text-light" style="background-color: #35b729;" href="details.php">View</a></td>
+                            echo "<tr>
+                            <th scope='row'>" . $srno . "</th>
+                            <td>" . $regNo . "</td>
+                            <td>" . $row1['fname'] ." ". $row1['lname'] ."</td>
+                            <td>" . $row1['contactNo'] . "</td>
+                            <td>" . $row1['email'] . "</td>
+                            <td><form action='details.php' method='post'> <input type='hidden' name='id' value='" . $row['id'] . "'> <button name='showDetails' type='submit' class='btn text-center mt-3 text-light' style='background-color: #35b729;'>View</button> </form></td>
+                        </tr>";
+                        }
+                      else{
+                        echo "<tr>
+                        <th scope='row'>" . $srno . "</th>
+                        <td>" . $regNo . "</td>
+                        <td>Not Updated</td>
+                        <td>Not Updated</td>
+                        <td>".$row['email']."</td>
+                        <td><form action='details.php' method='post'> <input type='hidden' name='id' value='" . $row['id'] . "'> <button name='showDetails' type='submit' class='btn text-center mt-3 text-light' style='background-color: #35b729;' disabled >View</button> </form></td>
+                    </tr>";
 
+                      }
+                    }
 
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>1234</td>
-                        <td>raman</td>
-                        <td>9090909090</td>
-                        <td>abc@gmail.com</td>
-                        <td><a class="btn text-center mt-3 text-light" style="background-color: #35b729;" href="details.php">View</a></td>
-
-
-                    </tr>
+                    ?>
+                </tbody>
+            </table>
 
         </div>
     </div>
