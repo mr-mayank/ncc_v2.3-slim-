@@ -1,6 +1,15 @@
 <?php
 
 include 'database/include.php';
+if (isset($_SESSION['userType'])) {
+    $userType = $_SESSION['userType'];
+    if ($userType == 'student') {
+        header("Location: ./student_dashboard.php");
+    } elseif ($userType == 'admin') {
+        header("Location: ./admin_home.php");
+    }
+}
+
 
 ?>
 

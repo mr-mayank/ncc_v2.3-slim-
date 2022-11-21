@@ -2,6 +2,16 @@
 
 include 'database/include.php';
 
+if (isset($_SESSION['userType'])) {
+    $userType = $_SESSION['userType'];
+    if ($userType == 'student') {
+        header("Location: ./student_dashboard.php");
+    } elseif ($userType == 'admin') {
+        header("Location: ./admin_home.php");
+    }
+}
+
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,6 +35,12 @@ include 'database/include.php';
                             <center>
                                 <h3>Sign In</h3>
                             </center><br>
+                            <div class="mb-3 text-center text-white">
+                                <input type="radio" name="user_type" value="student" id="student" checked>
+                                <label for="student">Student</label>
+                                <input type="radio" name="user_type" value="admin" id="admin">
+                                <label for="admin">Admin</label>
+                            </div>
                             <div class="email_div">
                                 <input size="30" type="email" id="email" name="email" placeholder="Enter your Email Address">
                             </div>

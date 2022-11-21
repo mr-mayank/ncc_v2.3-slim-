@@ -1,3 +1,15 @@
+<?php
+session_start();
+if(!isset($_SESSION['userType'])){
+    header("Location: ./signin.php");
+}else{
+    if($_SESSION['userType'] != 'student'){
+        session_unset();
+        session_destroy();
+        header("Location: ./signin.php");
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,14 +28,39 @@
 
     <!-- <link rel="stylesheet" href="css/style.css"> -->
     <link rel="stylesheet" href="css/mycss.css">
-
+    <link rel="stylesheet" href="style.css">
     <script src="js/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="js/umd-popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <title>Vishwakarma Government Engineering College</title>
 </head>
 
 <body>
-
+<section>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#"><img src="images/logo.png" width="70" height="70" alt=""></a>
+                <button justify-content-end class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="justify-content-end collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="student_dashboard.php">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="EnrollForm.php">Enroll Form</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="student_events.php">Events</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="logout.php">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </section>
     <section id="cor"></section>
     <form action="addEnrollDetails.php" method="post"  enctype="multipart/form-data">
         <div id="page1" class="page show">
@@ -480,7 +517,6 @@
             </div>
         </div>
 
-
         <br>
     </form>
     <div class="d-flex justify-content-between container">
@@ -488,7 +524,23 @@
         <button class="btn btn-primary" onclick="changePageNext()" id="nextButton">Next</button>
 
     </div>
-
+    <br><br>
+    <section>
+        <footer style="background-color: #003975;color:white;padding:2rem">
+            <center>
+                <p>Content Owned by NCC</p>
+                <p>Developed and hosted by National Informatics Centre,</p>
+                <p>Ministry of Electronics & Information Technology, Government of India
+                </p>
+                <p> Last Updated: Nov 19, 2022</p>
+                <hr>
+                <div style="background-color: #003975;">
+                    Copyright &#169; 2022 All Rights Reserved
+                </div>
+            </center>
+        </footer>
+    </section>
+    
     <!-- Custom JS -->
     <script src="JS/script.js?v=<?php
                                 echo time();

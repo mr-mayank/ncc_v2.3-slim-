@@ -1,7 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Raleway&family=Roboto&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+body {
+    font-family: 'Raleway', sans-serif;
+
 }
 
 /* ********************Sign_Up page******************** */
@@ -53,13 +60,6 @@
     border: none;
     border-radius: 5px;
 }
-
-/* .signup_page .row .sign_up_card label {
-    color: whitesmoke;
-    padding: 4px;
-    font-size: larger;
-    font-weight: 600;
-} */
 
 .signup_page .row .sign_up_card .email_div {
     display: flex;
@@ -124,14 +124,6 @@
     border-radius: 5px;
 }
 
-/* 
-.signin_page .row .sign_in_card label {
-    color: whitesmoke;
-    padding: 4px;
-    font-size: larger;
-    font-weight: 600;
-} */
-
 .signin_page .row .sign_in_card .email_div, .pass_div {
     display: flex;
 
@@ -144,4 +136,50 @@
     font-size: medium;
     font-weight: 600;
     margin-top: 2rem;
+}
+
+
+/* ***************navbar css*****************  */
+.navbar {
+    background-color: #003975;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.nav-link {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.nav-link:after {
+    display: block;
+    content: '';
+    border-bottom: solid 2px #35b729;
+    transform: scaleX(0);
+    transition: transform 250ms ease-in-out;
+}
+
+.nav-link:hover:after {
+    transform: scaleX(1);
+}
+
+/* *************add event********** */
+.heading {
+    color: #003975;
+    font-weight: 600;
+}
+
+/* ***************form***************** */
+
+.dept-title {
+    text-align: center;
+    color: #003975;
+    font-family: 'Raleway', sans-serif;
+}
+
+label {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
+    color: #003975;
 }
