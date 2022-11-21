@@ -1,0 +1,22 @@
+body {
+    color: rgb(76, 8, 8);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+label {
+    font-family: 'Raleway';
+}
+
+h2 {
+    font-family: Arial, Helvetica, sans-serif !important;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
