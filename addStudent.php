@@ -50,8 +50,6 @@ if (isset($_POST['addStudent'])) {
 
             $mail->setFrom('parekhpriyanka177@gmail.com', 'Priyanka');
             $mail->addAddress($email);
-            // $mail->addAddress('receiver2@gfg.com', 'Name');
-
             $mail->isHTML(true);
             $mail->Subject = 'Welcome New Cadet In NCC';
             $mail->Body    =  "Here is your login credentials please don't share with anyone and keep it save for last moment.\n\n Email : " . $email . "\n Password : " . $password . "\n\nYou can use this login credentials to login to the NCC portal.";
