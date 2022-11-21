@@ -143,7 +143,9 @@ if(isset($_POST['showDetails'])){
         <div class="container mt-4">
             <center>
                 <img src="<?php echo $studentP ?>" alt="image" style="height: 12rem; width: 12rem;">
-                <h4>Raman</h4>
+                <h4>
+                    <?php echo $fname . " " . $mname . " " . $lname ?>
+                </h4>
                 <h5>1. PERSONAL DETAILS</h5>
             </center>
             <table style="width:60%">
@@ -233,11 +235,11 @@ if(isset($_POST['showDetails'])){
                 </tr>
                 <tr>
                     <th>Sign Photo</th>
-                    <td><a href="<?php echo $studentS ?>"> Click Here</a></td>
+                    <td><a href="<?php echo $studentS ?>" target="_blank"> Click Here</a></td>
                 </tr>
                 <tr>
                     <th>Passbook Photo</th>
-                    <td><a href="<?php echo $studentPa ?>"> Click Here </a></td>
+                    <td><a href="<?php echo $studentPa ?>" target="_blank"> Click Here </a></td>
                 </tr>
             </table>
         </div>
@@ -398,6 +400,14 @@ if(isset($_POST['showDetails'])){
         </div>
 
     </div>
+    <br>
+    <br>
+    <center> 
+    <a class="btn text-center mt-3 text-light" style="background-color: #35b729;" href="cadets.php">Back to Dashboard</a>
+</center>
+<br>
+<br>
+  
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 </body>
