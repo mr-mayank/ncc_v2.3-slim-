@@ -106,9 +106,27 @@ if(!isset($_SESSION['userType'])){
                             </div>
                         </td>
                     </tr>
+                </tbody>
+            </table>
         </div>
-    </div>
 
+    </div>
+    <section>
+        <footer style="background-color: #003975;color:white;padding:2rem">
+            <center>
+                <p>Content Owned by NCC</p>
+                <p>Developed and hosted by National Informatics Centre,</p>
+                <p>Ministry of Electronics & Information Technology, Government of India
+                </p>
+                <p> Last Updated: Nov 19, 2022</p>
+                <hr>
+                <div style="background-color: #003975;">
+                    Copyright &#169; 2022 All Rights Reserved
+                </div>
+            </center>
+        </footer>
+    </section>
+    
     <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
     <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script>
@@ -116,7 +134,9 @@ if(!isset($_SESSION['userType'])){
             $('#myTable').DataTable();
         });
     </script>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+   
 </body>
 
 </html>
