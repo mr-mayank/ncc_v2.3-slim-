@@ -80,11 +80,7 @@ $eventDetailsQuery =  mysqli_query($conn, $eventDetails);
         </nav>
 
     </section>
-    <div class="container events">
-        <section class="mt-4">
-            <center>
-                <h4 class="heading">Add New Event</h4>
-            </center>
+    
             <?php
             if(isset($_POST['editEvent'])){
                 $evId = $_POST['evId'];
@@ -96,7 +92,12 @@ $eventDetailsQuery =  mysqli_query($conn, $eventDetails);
                 $evDetails = $row['evDetails'];
                 $startDate = $row['startDate'];
                 $endDate = $row['endDate'];
-                echo "<form action='EditEvent.php' method='POST'>
+                echo "<div class='container events'>
+                <section class='mt-4'>
+                    <center>
+                        <h4 class='heading'>Edit Event</h4>
+                    </center>
+                <form action='EditEvent.php' method='POST'>
                 <div class='data p-2 mt-4' style='border: 1px solid black;'>
                 <div class='form-group mt-3'>
                 <div class='row' style='justify-content:center'>
@@ -145,7 +146,13 @@ $eventDetailsQuery =  mysqli_query($conn, $eventDetails);
                 </center>
             </form>";
             }else{
-                echo "<form action='AddEvent.php' method='post'>
+                echo "
+                <div class='container events'>
+                <section class='mt-4'>
+                    <center>
+                        <h4 class='heading'>Add New Event</h4>
+                    </center>
+                <form action='AddEvent.php' method='post'>
                 <div class='data p-2 mt-4' style='border: 1px solid black;'>
 
                     <div class='form-group mt-3'>
