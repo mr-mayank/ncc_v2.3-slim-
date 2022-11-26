@@ -1,5 +1,5 @@
 <?php
-session_start();
+include('database/include.php');
 if(!isset($_SESSION['userType'])){
     header("Location: ./signin.php");
 }else{
@@ -9,6 +9,12 @@ if(!isset($_SESSION['userType'])){
         header("Location: ./signin.php");
     }
 }
+
+$eventDetails = "SELECT * FROM `event_handle`";
+$eventDetailsQuery =  mysqli_query($conn, $eventDetails);
+
+
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -79,59 +85,121 @@ if(!isset($_SESSION['userType'])){
             <center>
                 <h4 class="heading">Add New Event</h4>
             </center>
+            <?php
+            if(isset($_POST['editEvent'])){
+                $evId = $_POST['evId'];
 
-            <form action="">
-                <div class="data p-2 mt-4" style="border: 1px solid black;">
+                $sql = "SELECT * FROM `event_handle` WHERE `id` = '$evId'";
+                $result = mysqli_query($conn, $sql);
+                $row = mysqli_fetch_assoc($result);
+                $evName = $row['evName'];
+                $evDetails = $row['evDetails'];
+                $startDate = $row['startDate'];
+                $endDate = $row['endDate'];
+                echo "<form action='EditEvent.php' method='POST'>
+                <div class='data p-2 mt-4' style='border: 1px solid black;'>
+                <div class='form-group mt-3'>
+                <div class='row' style='justify-content:center'>
+                <div class='col-sm-3'>
+                    <label for=' class='col-form-label'>Event Name:</label>
+                </div>
 
-                    <div class="form-group mt-3">
-                        <div class="row" style="justify-content:center">
-                            <div class="col-sm-3">
-                                <label for="" class="col-form-label">Event Name:</label>
+                <div class='col-sm-6'>
+                    <input type='text' name='eventName' value='$evName' class='form-control' id='eventName'>
+                </div>
+            </div>
+        </div>
+        <div class='form-group mt-3'>
+            <div class='row' style='justify-content:center'>
+                <div class='col-sm-3'>
+                    <label for=' class='col-form-label'>Event Details:</label>
+                </div>
+                <div class='col-sm-6'>
+                    <textarea name='eventDetails' class='form-control' id='eventDetails' rows='3'>$evDetails</textarea>
+                </div>
+            </div>
+        </div>
+        <div class='form-group mt-3'>
+            <div class='row' style='justify-content:center'>
+                <div class='col-sm-3'>
+                    <label for=' class='col-form-label'>Start Date:</label>
+                </div>
+                <div class='col-sm-6'>
+                    <input type='date' name='startDate' value='$startDate' class='form-control' id='startDate'>
+                </div>
+            </div>
+        </div>
+        <div class='form-group mt-3'>
+            <div class='row' style='justify-content:center'>
+                <div class='col-sm-3'>
+                    <label for=' class='col-form-label'>End Date:</label>
+                </div>
+                <div class='col-sm-6'>
+                    <input type='date' name='endDate' value='$endDate' class='form-control' id='endDate'>
+                </div>
+            </div>
+        </div>
+                <input type='hidden' name='evId' value='$evId'>
+                <center>
+                <button type='submit' class='btn btn-lg mt-3 text-light' style='background-color: #35b729;' name='EditEvent'>Edit Event</button>
+                </center>
+            </form>";
+            }else{
+                echo "<form action='AddEvent.php' method='post'>
+                <div class='data p-2 mt-4' style='border: 1px solid black;'>
+
+                    <div class='form-group mt-3'>
+                        <div class='row' style='justify-content:center'>
+                            <div class='col-sm-3'>
+                                <label for=' class='col-form-label'>Event Name:</label>
                             </div>
 
-                            <div class="col-sm-6">
-                                <input type="text" name="eventName" class="form-control" id="eventName">
+                            <div class='col-sm-6'>
+                                <input type='text' name='eventName' class='form-control' id='eventName'>
                             </div>
                         </div>
                     </div>
 
-                    <div class="form-group mt-3">
-                        <div class="row" style="justify-content:center">
-                            <div class="col-sm-3">
-                                <label for="" class="col-form-label">Event Details:</label>
+                    <div class='form-group mt-3'>
+                        <div class='row' style='justify-content:center'>
+                            <div class='col-sm-3'>
+                                <label for=' class='col-form-label'>Event Details:</label>
                             </div>
-                            <div class="col-sm-6">
-                                <textarea class="form-control" id="eventDetails" rows="3" name="eventDetails"></textarea>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group mt-3">
-                        <div class="row" style="justify-content:center">
-                            <div class="col-sm-3">
-                                <label for="" class="col-form-label">Starting Date:</label>
-                            </div>
-                            <div class="col-sm-6">
-                                <input id="startDate" class="form-control" type="date" name="startDate">
+                            <div class='col-sm-6'>
+                                <textarea class='form-control' id='eventDetails' rows='3' name='eventDetails'></textarea>
                             </div>
                         </div>
                     </div>
 
-                    <div class="form-group mt-3">
-                        <div class="row" style="justify-content:center">
-                            <div class="col-sm-3">
-                                <label for="" class="col-form-label">Ending Date:</label>
+                    <div class='form-group mt-3'>
+                        <div class='row' style='justify-content:center'>
+                            <div class='col-sm-3'>
+                                <label for=' class='col-form-label'>Starting Date:</label>
                             </div>
-                            <div class="col-sm-6">
-                                <input id="endDate" class="form-control" type="date" name="endDate">
+                            <div class='col-sm-6'>
+                                <input id='startDate' class='form-control' type='date' name='startDate'>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class='form-group mt-3'>
+                        <div class='row' style='justify-content:center'>
+                            <div class='col-sm-3'>
+                                <label for=' class='col-form-label'>Ending Date:</label>
+                            </div>
+                            <div class='col-sm-6'>
+                                <input id='endDate' class='form-control' type='date' name='endDate'>
                             </div>
                         </div>
                     </div>
                     <center>
-                        <button type="button" class="btn btn-lg mt-3 text-light" style="background-color: #35b729;">Add</button>
+                        <button type='submit' class='btn btn-lg mt-3 text-light' style='background-color: #35b729;' name='addEvent'>Add Event</button>
                     </center>
                 </div>
-            </form>
+            </form> ";
+            }
+            ?>
+            
         </section>
 
         <section>
@@ -151,20 +219,28 @@ if(!isset($_SESSION['userType'])){
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>xyz</td>
-                                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed impedit quis cumque, voluptatum facere vero at nemo minima, ad facilis necessitatibus nam rerum deleniti possimus iure. Sunt cupiditate adipisci quidem dolor</td>
-                                <td>01/12/2022</td>
-                                <td>09/12/2022</td>
-                                <td><button class="btn btn-lg mt-3 text-light" style="background-color: #35b729;">Edit</button></td>
-                            </tr>
-                            <tr>
-                                <td>pqr</td>
-                                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed impedit quis cumque, voluptatum facere vero at nemo minima, ad facilis necessitatibus nam rerum deleniti possimus iure. Sunt cupiditate adipisci quidem dolor</td>
-                                <td>08/12/2022</td>
-                                <td>21/12/2022</td>
-                                <td><button class="btn btn-lg mt-3 text-light" style="background-color: #35b729;">Edit</button></td>
-                            </tr>
+                         
+                                <?php
+                                    while($eventDetailsQueryDetails = mysqli_fetch_array($eventDetailsQuery)){
+                                        $eventName = $eventDetailsQueryDetails['evName'];
+                                        $eventDetails = $eventDetailsQueryDetails['evDetails'];
+                                        $startDate = $eventDetailsQueryDetails['startDate'];
+                                        $sdate = date_create($startDate);
+                                        $endDate = $eventDetailsQueryDetails['endDate'];
+                                        $edate = date_create($endDate);
+                                        $eventID = $eventDetailsQueryDetails['id'];
+                                        echo "<tr id='$eventID'>";
+                                        echo "<td>$eventName</td>";
+                                        echo "<td>$eventDetails</td>";
+                                        echo "<td>".date_format($sdate, "d-m-Y")."</td>";
+                                        echo "<td>".date_format($edate, "d-m-Y")."</td>";
+                                        echo"<td> <form method='post'> <input type='hidden' name='evId' value='$eventID'> <button type='submit' id='editEvent' class='btn btn-sm text-light' name='editEvent' style='background-color: #35b729;'>Edit</button> </form> </td>";
+                                        // echo "<td><a href='add_event.php?eventID=$eventID' class='btn btn-lg mt-3 text-light' style='background-color: #35b729;'>Edit</a></td>";
+                                        // echo "<td><a href='editEvent.php?eventID=$eventID' class='btn btn-sm text-light' style='background-color: #003975;'>Edit</a></td>";
+                                        // echo "<td><button class='btn btn-lg mt-3 text-light' style='background-color: #35b729;'>Edit</button></td>";
+                                        echo "</tr>";
+                                    }
+                                ?>
                         </tbody>
                     </table>
                 </div>
@@ -187,7 +263,27 @@ if(!isset($_SESSION['userType'])){
             </center>
         </footer>
     </section>
-
+    <!-- <script>
+        function fun(eventID){
+            alert(eventID);
+        }
+         function editEv (event) {
+                console.log(event);
+                var eventID = event;
+                var Name = document.getElementById(eventID).cells[0].innerHTML;
+                var Details = document.getElementById(eventID).cells[1].innerHTML;
+                var StartDate = document.getElementById(eventID).cells[2].innerHTML;
+                var EndDate = document.getElementById(eventID).cells[3].innerHTML;
+                var sdate = Date(StartDate);
+                // var edate = Date(EndDate);
+            
+                document.getElementById("eventName").value = Name;
+                document.getElementById("eventDetails").value = Details;
+                document.getElementById("startDate").value = StartDate;
+                document.getElementById("endDate").value =  EndDate;
+            
+        };
+    </script> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
     <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
