@@ -10,8 +10,6 @@ if(!isset($_SESSION['userType'])){
     }
 }
 
-$eventDetails = "SELECT * FROM `event_handle`";
-$eventDetailsQuery =  mysqli_query($conn, $eventDetails);
 
 ?>
 <!doctype html>
@@ -69,7 +67,11 @@ $eventDetailsQuery =  mysqli_query($conn, $eventDetails);
         </nav>
 
     </section>
-
+    <br>
+    <br>
+    <center><h3>
+        Current Events
+    </h3></center>
     <div id="table-wrapper" class="p-5 mt-3">
         <div class="main mt-5" id="table-scroll">
             <table class="table" id="myTable" class="myTable">
@@ -83,29 +85,66 @@ $eventDetailsQuery =  mysqli_query($conn, $eventDetails);
                 </thead>
                 <tbody>
                 <?php
+                    $eventDetails = "SELECT * FROM `event_handle`";
+                    $eventDetailsQuery =  mysqli_query($conn, $eventDetails);
                     $i = 1;
-                    while($eventDetailsQueryDetails = mysqli_fetch_array($eventDetailsQuery)){
-                        echo "<tr>";
-                        echo "<td>".$i."</td>";
-                        echo "<td>".$eventDetailsQueryDetails['evName']."</td>";
-                        echo "<td><a href='attendance_sheet.php?event_id=".$eventDetailsQueryDetails['id']."'>View</a></td>";
-                        echo "</tr>";
-                        $i++;
-                    }
-
+                    while($row = mysqli_fetch_array($eventDetailsQuery)){
+                        $tdate = date('Y-m-d');
+                        $date = $row['endDate'];
+                        if($date > $tdate){
+                            echo "<tr>";
+                            echo "<td>".$i."</td>";
+                            echo "<td>".$row['evName']."</td>";
+                            echo "<td>"; ?>  <form action="viewAttendee.php" method="post"><input type="hidden" name="evId" value="<?php echo $row['id']; ?>" > <button style="padding: 0.5rem 0.7rem; background-color: #35b729;" type="submit" class="btn btn-sm text-light" name="attandee" >View Attandance</button></form> <?php echo "</td>";
+                            echo "</tr>";
+                            $i++;
+                        }
                 
-            ?>
-                    <!-- <tr>
-                        <td>1</td>
-                        <td>xyz</td>
-                        <td>
-                            <div>
-                                <a href="documents/Problem_Statements.pdf" style="width:100%;height:20px;"> Download</a>
-                            </div>
-                        </td>
+                    }  
+            ?>                 
+                </tbody>
+            </table>
+        </div>
 
-                    </tr> -->
-                   
+    </div>
+    <br>
+    <br>
+
+    <center><h3>
+        Previous Events
+    </h3></center>
+    <div id="table-wrapper" class="p-5 mt-3">
+
+        <div class="main mt-5" id="table-scroll1">
+            <table class="table" id="myTable1" class="myTable">
+                <thead style="background-color: #003975; color:white">
+                    <tr>
+                        <th scope="col">Sr. No</th>
+                        <th scope="col">Event</th>
+                        <th scope="col">Event Details</th>
+                        <!-- <th scope="col">Attendance sheet</th> -->
+
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                 $eventDetails = "SELECT * FROM `event_handle`";
+                 $eventDetailsQuery =  mysqli_query($conn, $eventDetails);
+                    $i = 1;
+                    while($row = mysqli_fetch_array($eventDetailsQuery)){
+                        $tdate = date('Y-m-d');
+                        $date = $row['endDate'];
+                        if($date < $tdate){
+                            echo "<tr>";
+                            echo "<td>".$i."</td>";
+                            echo "<td>".$row['evName']."</td>";
+                            echo "<td> " .$row['evDetails']. "</td>";
+                            echo "</tr>";
+                            $i++;
+                        }
+                
+                    }  
+            ?>                 
                 </tbody>
             </table>
         </div>
@@ -133,7 +172,11 @@ $eventDetailsQuery =  mysqli_query($conn, $eventDetails);
         $(document).ready(function() {
             $('#myTable').DataTable();
         });
+        $(document).ready(function() {
+            $('#myTable1').DataTable();
+        });
     </script>
+    
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
    

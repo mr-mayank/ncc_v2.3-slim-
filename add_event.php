@@ -231,22 +231,22 @@ $eventDetailsQuery =  mysqli_query($conn, $eventDetails);
                                     while($eventDetailsQueryDetails = mysqli_fetch_array($eventDetailsQuery)){
                                         $eventName = $eventDetailsQueryDetails['evName'];
                                         $eventDetails = $eventDetailsQueryDetails['evDetails'];
+                                        $tdate = date("Y-m-d");
                                         $startDate = $eventDetailsQueryDetails['startDate'];
                                         $sdate = date_create($startDate);
                                         $endDate = $eventDetailsQueryDetails['endDate'];
                                         $edate = date_create($endDate);
                                         $eventID = $eventDetailsQueryDetails['id'];
+                                        if($tdate < $startDate){
                                         echo "<tr id='$eventID'>";
                                         echo "<td>$eventName</td>";
                                         echo "<td>$eventDetails</td>";
                                         echo "<td>".date_format($sdate, "d-m-Y")."</td>";
                                         echo "<td>".date_format($edate, "d-m-Y")."</td>";
                                         echo"<td> <form method='post'> <input type='hidden' name='evId' value='$eventID'> <button type='submit' id='editEvent' class='btn btn-sm text-light' name='editEvent' style='background-color: #35b729;'>Edit</button> </form> </td>";
-                                        // echo "<td><a href='add_event.php?eventID=$eventID' class='btn btn-lg mt-3 text-light' style='background-color: #35b729;'>Edit</a></td>";
-                                        // echo "<td><a href='editEvent.php?eventID=$eventID' class='btn btn-sm text-light' style='background-color: #003975;'>Edit</a></td>";
-                                        // echo "<td><button class='btn btn-lg mt-3 text-light' style='background-color: #35b729;'>Edit</button></td>";
                                         echo "</tr>";
                                     }
+                                }
                                 ?>
                         </tbody>
                     </table>
