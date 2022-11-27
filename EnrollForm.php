@@ -1,5 +1,5 @@
 <?php
-session_start();
+include('database/include.php');
 if(!isset($_SESSION['userType'])){
     header("Location: ./signin.php");
 }else{
@@ -8,6 +8,12 @@ if(!isset($_SESSION['userType'])){
         session_destroy();
         header("Location: ./signin.php");
     }
+}
+$query = "SELECT * FROM `personaldetails` WHERE `userID` = '".$_SESSION['userId']."'";
+$result = mysqli_query($conn, $query);
+$userDetails = mysqli_fetch_assoc($result);
+if(mysqli_num_rows($result) > 0){
+    header("Location: ./alreadyEnroled.php");
 }
 ?>
 <!DOCTYPE html>

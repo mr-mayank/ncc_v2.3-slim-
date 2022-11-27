@@ -1,9 +1,7 @@
 <?php
-    // session_start();
-    //commentted here me govind
+    
     include ('database/include.php');
-    $uniqueID = 2;
-    // $uniqueID = $_SESSION['uniqueID'];
+    $uniqueID = $_SESSION['userId'];
     $getApplication = "SELECT * FROM `personaldetails` WHERE `userID` = '$uniqueID'";
     $getApplicationResult = mysqli_query($conn, $getApplication);
     $getApplicationRow = mysqli_fetch_assoc($getApplicationResult);
@@ -1021,6 +1019,8 @@
     <center>
         <input type="button" value="Print Registration Form" onclick="makepdf('nccRegForm')">
     </center>
+    <br>
+    <br>
     <script>
         function makepdf(nccForm) {
             var regForm = document.getElementById(nccForm).innerHTML;

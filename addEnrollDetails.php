@@ -97,9 +97,9 @@ if(isset($_POST['addEnrollDetails'])){
     $addBank = mysqli_query($conn,$addBank);
 
     if($addPersonal && $addPhoto && $addAcademic && $addEnroll && $addBank){
-        echo "success";
+        header("Location: alreadyEnroled.php");
     }else{
-        echo "failed";
+        echo "<script>alert('Something went wrong!')</script>";
     }
 }
 

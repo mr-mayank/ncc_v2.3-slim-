@@ -1,5 +1,5 @@
 <?php
-session_start();
+include ('database/include.php');
 if(!isset($_SESSION['userType'])){
     header("Location: ./signin.php");
 }else{
@@ -7,6 +7,60 @@ if(!isset($_SESSION['userType'])){
         session_unset();
         session_destroy();
         header("Location: ./signin.php");
+    }
+}
+
+if(isset($_POST['yes'])){
+    $event_id = $_POST['eventId'];
+    $student_id = $_SESSION['userId'];
+    $searchEvent = "SELECT * FROM `event_handle` WHERE `id` = ?";
+    $findEvent = $conn->prepare($searchEvent);
+    $findEvent->bind_param("i", $event_id);
+    $findEvent->execute();
+    $res = $findEvent->get_result();
+    $eventDetails = mysqli_fetch_assoc($res);
+    $participant = $eventDetails['participant'];
+    if($participant == NULL || $participant == ''){
+        $participant = $student_id;
+    }else{
+        $participant = $participant .','. $student_id;
+    }
+    $updateEvent = "UPDATE `event_handle` SET `participant` = ? WHERE `id` = ?";
+    $updateEvent = $conn->prepare($updateEvent);
+    $updateEvent->bind_param("si", $participant, $event_id);
+    if($updateEvent->execute()){
+        echo "<script>alert('Successfully Registered !!')</script>";
+        echo "<script>window.open('./student_events.php','_self')</script>";
+    }else{
+        echo "<script>alert('Something went wrong !!')</script>";
+        echo "<script>window.open('./student_events.php','_self')</script>";
+    }
+}
+
+if(isset($_POST['no'])){
+    $event_id = $_POST['eventId'];
+    $student_id = $_SESSION['userId'];
+    $searchEvent = "SELECT * FROM `event_handle` WHERE `id` = ?";
+    $findEvent = $conn->prepare($searchEvent);
+    $findEvent->bind_param("i", $event_id);
+    $findEvent->execute();
+    $res = $findEvent->get_result();
+    $eventDetails = mysqli_fetch_assoc($res);
+    $participant = $eventDetails['notInterested'];
+    if($participant == NULL || $participant == ''){
+        $participant = $student_id;
+    }else{
+        $participant = $participant .','. $student_id;
+    }
+    $updateEvent = "UPDATE `event_handle` SET `notInterested` = ? WHERE `id` = ?";
+    $updateEvent = $conn->prepare($updateEvent);
+    $updateEvent->bind_param("si", $participant, $event_id);
+    if($updateEvent->execute()){
+        echo "<script>alert('Your response has been submited !!')</script>";
+        echo "<script>window.open('./student_events.php','_self')</script>";
+    }else{
+        echo "<script>alert('Something went wrong !!')</script>";
+        echo "<script>window.open('./student_events.php','_self')</script>";
     }
 }
 ?>
@@ -68,95 +122,86 @@ if(!isset($_SESSION['userType'])){
         </center>
         <div class="row mt-3" style="width: 100%;text-align:center;margin: 0 auto;">
 
-            <div class="col-md-4">
-                <div class="card" style="margin: 0 auto;">
-                    <div class="row">
+            
+                <?php
+                $sql = "SELECT * FROM `event_handle`" ;
+                $result = mysqli_query($conn, $sql);
+                while($row = mysqli_fetch_assoc($result)){
+                    $tdate = date("Y-m-d");
+                    $edate = $row['startDate'];
+                    $participate = false;
+                    $arrayParticipate = explode(",",$row['participant']);
+                    $arrayNotInterested = explode(",",$row['notInterested']);
+                    foreach($arrayNotInterested as $value){
+                        if($value == $_SESSION['userId']){
+                            $participate = true;
+                        }
+                    }
+                    foreach($arrayParticipate as $value){
+                        if($value == $_SESSION['userId']){
+                            $participate = true;
+                        }
+                    }
+
+                    if($tdate <= $edate && $participate == false){
+                        echo '
+                        <div class="col-md-4">
+                <div class="card" style="margin: 0 auto; padding: 1rem;">
+                            <div class="row">
                         <label for="" class="col-md-4 col-form-label">Event name:</label>
                         <div class="col-md-8">
-                            <input type="text" readonly class="form-control-plaintext" id="eventName" name="eventName" value="xyz">
+                        <p>
+                        '.$row['evName'].'
+                        </p>
                         </div>
                     </div>
 
                     <div class="row">
                         <label for="" class="col-md-4 col-form-label">Event Details:</label>
                         <div class="col-md-8">
-                            <input type="text" readonly class="form-control-plaintext" id="eventDetails" name="eventDetails" value="xyz">
+                        <p style="text-align: justify; "> 
+                        '.$row['evDetails'].'
+                        </p>
+                           
                         </div>
                     </div>
 
                     <div class=" row">
                         <label for="" class="col-md-4 col-form-label">Starting Date:</label>
                         <div class="col-md-8">
-                            <input type="text" readonly class="form-control-plaintext" id="startDate" name="startDate" value="1/12/2022">
+                            <input type="text" readonly class="form-control-plaintext" id="startDate" name="startDate" value="'.$row['startDate'].'">
                         </div>
                     </div>
 
                     <div class="row">
-                        <label for="" class="col-md-4 col-form-label">Event Details:</label>
+                        <label for="" class="col-md-4 col-form-label">Ending Date:</label>
                         <div class="col-md-8">
-                            <input type="text" readonly class="form-control-plaintext" id="endDate" name="endDate" value="12/12/2022">
+                            <input type="text" readonly class="form-control-plaintext" id="endDate" name="endDate" value="'.$row['endDate'].'">
                         </div>
                     </div>
 
                     <div class="btn_group" style="display: flex;margin:0 auto;">
-                        <form action="" class="m-3">
-                            <input type="hidden" id="yes" name="yes" value="yes">
-                            <input type="Submit" value="Yes" class="btn btn-lg text-light m-2" style="background-color: #35b729;">
+                    ';
+                    ?>
+                        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" class="m-3">
+                            <input type="hidden" id="yes" name="eventId" value="<?php echo $row['id'] ?>">
+                            <input type="Submit" value="Yes" name="yes" class="btn btn-lg text-light m-2" style="background-color: #35b729;">
                         </form>
-                        <form action="" class="m-3">
-                            <input type="hidden" id="no" name="no" value="no">
-                            <input type="Submit" value="no" class="btn btn-lg text-light m-2" style="background-color: #35b729;">
+                        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" class="m-3">
+                            <input type="hidden" id="no" name="eventId" value="<?php echo $row['id'] ?>">
+                            <input type="Submit" value="no" name="no" class="btn btn-lg text-light m-2" style="background-color: #35b729;">
                         </form>
+                        <?php
+                        echo '
                     </div>
-
-                </div>
+                    </div>
+                    </div>
+                            
+                    ';
+                    }
+                }
+                ?>
             </div>
-
-            <div class="col-md-4">
-                <div class="card" style="margin: 0 auto;">
-                    <div class="row">
-                        <label for="" class="col-md-4 col-form-label">Event name:</label>
-                        <div class="col-md-8">
-                            <input type="text" readonly class="form-control-plaintext" id="eventName" name="eventName" value="xyz">
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <label for="" class="col-md-4 col-form-label">Event Details:</label>
-                        <div class="col-md-8">
-                            <input type="text" readonly class="form-control-plaintext" id="eventDetails" name="eventDetails" value="xyz">
-                        </div>
-                    </div>
-
-                    <div class=" row">
-                        <label for="" class="col-md-4 col-form-label">Starting Date:</label>
-                        <div class="col-md-8">
-                            <input type="text" readonly class="form-control-plaintext" id="startDate" name="startDate" value="1/12/2022">
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <label for="" class="col-md-4 col-form-label">Event Details:</label>
-                        <div class="col-md-8">
-                            <input type="text" readonly class="form-control-plaintext" id="endDate" name="endDate" value="12/12/2022">
-                        </div>
-                    </div>
-
-                    <div class="btn_group" style="display: flex;margin:0 auto;">
-                        <form action="" class="m-3">
-                            <input type="hidden" id="yes" name="yes" value="yes">
-                            <input type="Submit" value="Yes" class="btn btn-lg text-light m-2" style="background-color: #35b729;">
-                        </form>
-                        <form action="" class="m-3">
-                            <input type="hidden" id="no" name="no" value="no">
-                            <input type="Submit" value="no" class="btn btn-lg text-light m-2" style="background-color: #35b729;">
-                        </form>
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
     </section>
 
     <section class="mt-4">
@@ -178,27 +223,34 @@ if(!isset($_SESSION['userType'])){
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>xyz</td>
-                        <td>
-                            1/12/22
-                        </td>
-                        <td>
-                            12/12/22
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>xyz</td>
-                        <td>
-                            1/12/22
-                        </td>
-                        <td>
-                            12/12/22
-                        </td>
-                    </tr>
+                    <?php
+                    $sql = "SELECT * FROM `event_handle`" ;
+                    $result = mysqli_query($conn, $sql);
+                    $i = 1;
+                    while($row = mysqli_fetch_assoc($result)){
+                        $tdate = date("Y-m-d");
+                        $edate = $row['endDate'];
+                        $participate = false;
+                        $arrayParticipate = explode(",",$row['participant']);
+                        foreach($arrayParticipate as $value){
+                            if($value == $_SESSION['userId']){
+                                $participate = true;
+                            }
+                        }
+                        if($tdate >= $edate && $participate == true){
+                            echo '
+                            <tr>
+                                <th scope="row">'.$i.'</th>
+                                <td>'.$row['evName'].'</td>
+                                <td>'.$row['startDate'].'</td>
+                                <td>'.$row['endDate'].'</td>
+                            </tr>
+                            ';
+                        }
+                        $i++;
+                    }
+                    ?>
+                </tbody>
         </div>
     </div>
 
