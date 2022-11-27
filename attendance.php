@@ -1,5 +1,5 @@
 <?php
-session_start();
+include('database/include.php');
 if(!isset($_SESSION['userType'])){
     header("Location: ./signin.php");
 }else{
@@ -9,6 +9,10 @@ if(!isset($_SESSION['userType'])){
         header("Location: ./signin.php");
     }
 }
+
+$eventDetails = "SELECT * FROM `event_handle`";
+$eventDetailsQuery =  mysqli_query($conn, $eventDetails);
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -78,7 +82,20 @@ if(!isset($_SESSION['userType'])){
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                <?php
+                    $i = 1;
+                    while($eventDetailsQueryDetails = mysqli_fetch_array($eventDetailsQuery)){
+                        echo "<tr>";
+                        echo "<td>".$i."</td>";
+                        echo "<td>".$eventDetailsQueryDetails['evName']."</td>";
+                        echo "<td><a href='attendance_sheet.php?event_id=".$eventDetailsQueryDetails['id']."'>View</a></td>";
+                        echo "</tr>";
+                        $i++;
+                    }
+
+                
+            ?>
+                    <!-- <tr>
                         <td>1</td>
                         <td>xyz</td>
                         <td>
@@ -87,25 +104,8 @@ if(!isset($_SESSION['userType'])){
                             </div>
                         </td>
 
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>pqr</td>
-                        <td>
-                            <div>
-                                <a href="documents/Problem_Statements.pdf" style="width:100%;height:20px;"> Download</a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>abc</td>
-                        <td>
-                            <div>
-                                <a href="documents/Problem_Statements.pdf" style="width:100%;height:20px;"> Download</a>
-                            </div>
-                        </td>
-                    </tr>
+                    </tr> -->
+                   
                 </tbody>
             </table>
         </div>
