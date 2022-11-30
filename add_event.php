@@ -69,7 +69,7 @@ $eventDetailsQuery =  mysqli_query($conn, $eventDetails);
                             <a class="nav-link text-light" href="add_event.php">Events</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" href="attendance.php">Attendance</a>
+                            <a class="nav-link text-light" href="attendance.php">Report</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light" href="logout.php">Logout</a>
@@ -147,6 +147,7 @@ $eventDetailsQuery =  mysqli_query($conn, $eventDetails);
             </form>";
             }else{
                 echo "
+
                 <div class='container events'>
                 <section class='mt-4'>
                     <center>
@@ -155,6 +156,18 @@ $eventDetailsQuery =  mysqli_query($conn, $eventDetails);
                 <form action='AddEvent.php' method='post'>
                 <div class='data p-2 mt-4' style='border: 1px solid black;'>
 
+                <div class='form-group mt-3'>
+                <div class='row' style='justify-content:center'>
+                    <div class='col-sm-3'>
+                        <label for=' class='col-form-label'>Event Type</label>
+                    </div>
+
+                    <div class='col-sm-6'>
+                        <input type='radio' name='eventType' value='0'> Normal Event
+                        <input type='radio' name='eventType' style='margin-left: 0.5rem;'  value='1'> Camp Event
+                    </div>
+                </div>
+            </div>
                     <div class='form-group mt-3'>
                         <div class='row' style='justify-content:center'>
                             <div class='col-sm-3'>
@@ -177,6 +190,17 @@ $eventDetailsQuery =  mysqli_query($conn, $eventDetails);
                             </div>
                         </div>
                     </div>
+                    <div class='form-group mt-3'>
+                    <div class='row' style='justify-content:center'>
+                        <div class='col-sm-3'>
+                            <label for=' class='col-form-label'>Event Place</label>
+                        </div>
+
+                        <div class='col-sm-6'>
+                            <input type='text' name='eventPlace' class='form-control' id='eventName'>
+                        </div>
+                    </div>
+                </div>
 
                     <div class='form-group mt-3'>
                         <div class='row' style='justify-content:center'>

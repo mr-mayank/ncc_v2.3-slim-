@@ -15,11 +15,13 @@ if(isset($_POST['addEvent'])){
     $eventDetails = $_POST['eventDetails'];
     $startDate = $_POST['startDate'];
     $endDate = $_POST['endDate'];
+    $place = $_POST['eventPlace'];
+    $type = $_POST['eventType'];
     $anoId = $_SESSION['anoID'];
 
-    $insertEvent = "INSERT INTO `event_handle`(`evName`, `evDetails`, `startDate`, `endDate`,`anoId`) VALUES (?,?,?,?,?)";
+    $insertEvent = "INSERT INTO `event_handle`(`evName`, `evDetails`, `startDate`, `endDate`,`anoId`, `place`, `typeOfEvent`) VALUES (?,?,?,?,?,?,?)";
     $insertEventQuery = $conn->prepare($insertEvent);
-    $insertEventQuery->bind_param("ssssi", $eventName, $eventDetails, $startDate, $endDate, $anoId);
+    $insertEventQuery->bind_param("ssssisi", $eventName, $eventDetails, $startDate, $endDate, $anoId, $place, $type);
     $insertEventQuery->execute();
     if($insertEventQuery){
         echo "<script>alert('Event Added Successfully !!')</script>";

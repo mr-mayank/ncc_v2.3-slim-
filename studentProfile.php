@@ -162,7 +162,7 @@ if(isset($_POST['showDetails']) || isset($_SESSION['updateID'])){
                 </h4>
                 <h5>1. PERSONAL DETAILS</h5>
             </center>
-            <form action="updateProfile.php" method="POST">
+            <form action="updateProfile.php" enctype="multipart/form-data" method="POST">
             <table style="width:60%">
                 <tr>
                     <th>Name </th>
@@ -239,6 +239,7 @@ if(isset($_POST['showDetails']) || isset($_SESSION['updateID'])){
                 <tr>
                     <th>Sex</th>
                     <td class="d-flex w-100 border-0">
+                    <center class="w-100">
                         <input type="radio" id= "sex"
                         <?php if ($gender == "Male") {
                             echo "checked";
@@ -250,7 +251,8 @@ if(isset($_POST['showDetails']) || isset($_SESSION['updateID'])){
                             echo "checked";
                         }
                         ?> name="sex" value="female" style="width: auto;margin-right: 1rem;margin-left: 1.5rem" >
-                         Female   
+                         Female 
+                    </center>  
                     </td>
                 </tr>
                 <tr>
@@ -324,21 +326,22 @@ if(isset($_POST['showDetails']) || isset($_SESSION['updateID'])){
                 </tr>
                 <tr>
                     <th>Have you ever been convicted by a criminal court?</th>
-                    <td>
+                    <td class="d-flex w-100 border-0">
+                    <center class="w-100">
                         <input type="radio" id="convicted" name="criminal"
                         <?php if ($isCrime == "Yes") {
                             echo "checked";
                         }
-                        ?> name="" value="Yes">
+                        ?> name="" value="Yes" style="width: auto;margin-right: 1rem;">
                          Yes
                         <input type="radio" id="convicted" name="criminal"
                         <?php if ($isCrime == "No") {
                             echo "checked";
                         }
-                        ?> name="" value="No">
+                        ?> name="" value="No" style="width: auto;margin-right: 1rem;margin-left: 1.5rem">
                          No
                         
-
+                        </center>
                     </td>
                 </tr>
                 <tr>
@@ -379,37 +382,40 @@ if(isset($_POST['showDetails']) || isset($_SESSION['updateID'])){
             <table style="width:60%">
                 <tr>
                     <th>Have you been enrolled in NCC earlier.</th>
-                    <td>
+                    <td class="d-flex w-100 border-0">
+                        <center class="w-100">
                         <input type="radio" id="ncc"
                         <?php if ($enrollNcc == "Yes") {
                             echo "checked";
                         }
-                        ?> name="nccEnroll" value="Yes">
+                        ?> name="nccEnroll" value="Yes" style="width: auto;margin-right: 1rem;">
                          Yes
                         <input type="radio" id="ncc"
                         <?php if ($enrollNcc == "No") {
                             echo "checked";
                         }
-                        ?> name="nccEnroll" value="No">
+                        ?> name="nccEnroll" value="No" style="width: auto;margin-right: 1rem;margin-left: 1.5rem">
                          No
-
+                        </center>
                     </td>
                 </tr>
                 <tr>
                     <th>Have you been dismissed from NCC</th>
-                    <td>
+                    <td class="d-flex w-100 border-0">
+                    <center class="w-100">
                         <input type="radio" id="ncc"
                         <?php if ($dissmissed == "Yes") {
                             echo "checked";
                         }
-                        ?> name="isDiss" value="Yes">
+                        ?> name="isDiss" value="Yes" style="width: auto;margin-right: 1rem;">
                          Yes
                         <input type="radio" id="ncc"
                         <?php if ($dissmissed == "No") {
                             echo "checked";
                         }
-                        ?> name="isDiss" value="N">
+                        ?> name="isDiss" value="No" style="width: auto;margin-right: 1rem;margin-left: 1.5rem">
                          No
+                        </center>
                     </td>
                 </tr>
                 <tr>
@@ -464,6 +470,32 @@ if(isset($_POST['showDetails']) || isset($_SESSION['updateID'])){
                     </td>
                 </tr>
 
+            </table>
+            
+        </div>
+        <div class="container">
+            <center>
+                <h5>Update Document</h5>
+            </center>
+            <table style="width:60%">
+                <tr>
+                    <th>Profile Photo</th>
+                    <td>
+                        <input type="file" name="NewProfile" >
+                    </td>
+                </tr>
+                <tr>
+                    <th>Sign Photo</th>
+                    <td>
+                        <input type="file" name="NewSign" >
+                    </td>
+                </tr>
+                <tr>
+                    <th>Passbook Photo</th>
+                    <td>
+                        <input type="file" name="NewPassbook"  >
+                    </td>
+                </tr>
             </table>
             
         </div>

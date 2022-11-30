@@ -84,7 +84,7 @@ if(!isset($_SESSION['userType'])){
                             <a class="nav-link text-light" href="add_event.php">Events</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" href="attendance.php">Attendance</a>
+                            <a class="nav-link text-light" href="attendance.php">Report</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light" href="logout.php">Logout</a>

@@ -67,8 +67,8 @@ $_SESSION['updateID'] = $_SESSION['userId'];
                     $searchRank = "SELECT * FROM `student_credentials` WHERE `rank` != 5 ";
                     $result = mysqli_query($conn, $searchRank);
                     while($row = mysqli_fetch_assoc($result)){
-                        echo "<div class='col-md-4  my-3'>";
-                        echo "<div class='card'>";
+                        echo "<div class='col-md-4  my-3' >";
+                        echo "<div class='card' style='height: 100%;'>";
                         $searchPhoto = "SELECT * FROM `studentdocument` WHERE `userID` = '$row[id]'";
                         $resultPhoto = mysqli_query($conn, $searchPhoto);
                         if(mysqli_num_rows($resultPhoto) > 0){
@@ -78,16 +78,17 @@ $_SESSION['updateID'] = $_SESSION['userId'];
                             $photo = "uploads/1668860768one piece nico robin pirates roronoa zoro chopper brook anime manga franky tony tony chopper monkey_www.wallpaperhi.com_2.jpg";                            
                         }
                        
-                        echo "<img src='". $photo ." class='card-img-top img-fluid' alt='...'>";
+                        echo "<img src='". $photo ."' class='card-img-top img-fluid' alt='...'>";
                         echo "<div class='card-body'>";
-                        echo "<h5 class='card-title'>";
+                        echo "<h5 class='card-title' style='text-align: center;'>";
+
                         if($row['rank'] == '0'){
                             echo "SUO";
-                        } else if(['rank'] == '1'){
+                        } else if($row['rank'] == '1'){
                             echo "CUO";
-                        } else if(['rank'] == '2'){
+                        } else if($row['rank'] == '2'){
                             echo "SGT";
-                        } else if(['rank'] == '3'){
+                        } else if($row['rank'] == '3'){
                             echo "CPL";
                         } else {
                             echo "LCPL";

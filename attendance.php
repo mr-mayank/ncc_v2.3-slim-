@@ -56,7 +56,7 @@ if(!isset($_SESSION['userType'])){
                             <a class="nav-link text-light" href="add_event.php">Events</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" href="attendance.php">Attendance</a>
+                            <a class="nav-link text-light" href="attendance.php">Report</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light" href="logout.php">Logout</a>
@@ -79,7 +79,7 @@ if(!isset($_SESSION['userType'])){
                     <tr>
                         <th scope="col">Sr. No</th>
                         <th scope="col">Event</th>
-                        <th scope="col">Attendance sheet</th>
+                        <th scope="col">Report Generation</th>
 
                     </tr>
                 </thead>
@@ -95,11 +95,10 @@ if(!isset($_SESSION['userType'])){
                             echo "<tr>";
                             echo "<td>".$i."</td>";
                             echo "<td>".$row['evName']."</td>";
-                            echo "<td>"; ?>  <form action="viewAttendee.php" method="post"><input type="hidden" name="evId" value="<?php echo $row['id']; ?>" > <button style="padding: 0.5rem 0.7rem; background-color: #35b729;" type="submit" class="btn btn-sm text-light" name="attandee" >View Attandance</button></form> <?php echo "</td>";
+                            echo "<td>"; ?>  <form action="viewAttendee.php" method="post"><input type="hidden" name="evId" value="<?php echo $row['id']; ?>" > <button style="padding: 0.5rem 0.7rem; background-color: #35b729;" type="submit" class="btn btn-sm text-light" name="attandee" >Report</button></form> <?php echo "</td>";
                             echo "</tr>";
                             $i++;
                         }
-                
                     }  
             ?>                 
                 </tbody>
@@ -113,6 +112,54 @@ if(!isset($_SESSION['userType'])){
     <center><h3>
         Previous Events
     </h3></center>
+    <div id="table-wrapper" class="p-5 mt-3">
+        <div class="main mt-5" id="table-scroll">
+            <table class="table" id="myTable2" class="myTable">
+                <thead style="background-color: #003975; color:white">
+                    <tr>
+                        <th scope="col">Sr. No</th>
+                        <th scope="col">Event</th>
+                        <th scope="col">Camp Photo</th>
+                        <th scope="col">Add Photo</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                    $eventDetails = "SELECT * FROM `event_handle`";
+                    $eventDetailsQuery =  mysqli_query($conn, $eventDetails);
+                    $i = 1;
+                    while($row = mysqli_fetch_array($eventDetailsQuery)){
+                        $tdate = date('Y-m-d');
+                        $date = $row['endDate'];
+                        if($date < $tdate && ($row['campPhoto'] == NULL || $row['campPhoto'] == '')) {
+                            echo "<tr>";
+                            echo "<td>".$i."</td>";
+                            echo "<td>".$row['evName']."</td>";
+
+                            ?>
+                            <form enctype="multipart/form-data" method="POST" action="addCampPhoto.php">
+                                <td>
+                                    <input type="hidden" name="evId" value="<?php echo $row['id']; ?>" >
+                                    <input type="file" name="campPhoto" id="campPhoto" required>
+                                </td>
+                                <td>
+                                    <button style="padding: 0.5rem 0.7rem; background-color: #35b729;" type="submit" class="btn btn-sm text-light" name="addCampPhoto" >Add</button>
+                                </td>
+
+                            </form>
+                             <?php
+                            
+                            echo "</tr>";
+                            $i++;
+                        }
+                    }  
+            ?>                 
+                </tbody>
+            </table>
+        </div>
+
+    </div>
     <div id="table-wrapper" class="p-5 mt-3">
 
         <div class="main mt-5" id="table-scroll1">
@@ -150,6 +197,7 @@ if(!isset($_SESSION['userType'])){
         </div>
 
     </div>
+
     <section>
         <footer style="background-color: #003975;color:white;padding:2rem">
             <center>
@@ -174,6 +222,9 @@ if(!isset($_SESSION['userType'])){
         });
         $(document).ready(function() {
             $('#myTable1').DataTable();
+        });
+        $(document).ready(function() {
+            $('#myTable2').DataTable();
         });
     </script>
     

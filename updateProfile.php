@@ -34,40 +34,35 @@ if(isset($_POST['updateProfile'])){
     
     $updatePersonal = "UPDATE `personaldetails` SET `fname`='$fname', `lname`='$lname', `mname`='$mname', `birthDate`='$birthday', `nationality`='$national', `fatherFname`='$f_fname', `fatherLname`='$f_lname', `fatherMname`='$f_mname', `motherFname`='$m_fname', `motherLname`='$m_lname', `motherMname`='$m_mname', `address`='$address', `contactNo`='$contact', `email`='$email', `gender`='$gender', `blood`='$blood', `nrRailway`='$rstation', `nrPolice`='$pstation' WHERE `userID`='$uniqueId'";
 
-    $addPersonalResult = mysqli_query($conn, $updatePersonal);
+    $addPersonal = mysqli_query($conn, $updatePersonal);
    
-    // if(empty($_FILES['studentphoto']['name'])) {
-    //     $studentP = "";
+    if(!empty($_FILES['NewProfile']['name'])) {
+        $studentphoto = $_FILES['NewProfile']['name'];
+        $studentphoto = time().$studentphoto;
+        $studentP = "uploads/".basename($studentphoto);
+        move_uploaded_file($_FILES['NewProfile']['tmp_name'], $studentP);
+        $updatePhoto = "UPDATE `studentdocument` SET `userPhoto`='$studentP' WHERE `userID`='$uniqueId'";
+        $updatePhotoResult = mysqli_query($conn, $updatePhoto);
 
-    // }else{
-    //     $studentphoto = $_FILES['studentphoto']['name'];
-    //     $studentphoto = time().$studentphoto;
-    //     $studentP = "uploads/".basename($studentphoto);
-    //     move_uploaded_file($_FILES['studentphoto']['tmp_name'], $studentP);
-    // }
+    }
+    if(!empty($_FILES['NewSign']['name'])) {
+        $studentsign = $_FILES['NewSign']['name'];
+        $studentsign = time().$studentsign;
+        $studentS = "uploads/".basename($studentsign);
+        move_uploaded_file($_FILES['NewSign']['tmp_name'], $studentS);
 
-    // if(empty($_FILES['studentsign']['name'])) {
-    //     $studentS = "";
-    // }else{
-    //     $studentsign = $_FILES['studentsign']['name'];
-    //     $studentsign = time().$studentsign;
-    //     $studentS = "uploads/".basename($studentsign);
-    //     move_uploaded_file($_FILES['studentsign']['tmp_name'], $studentS);
-    // }
-    // if(empty($_FILES['studentpass']['name'])) {
-    //     $studentPa = "";
-    // }else{
-    //     $studentpass = $_FILES['studentpass']['name'];
-    //     $studentpass = time().$studentpass;
-    //     $studentPa = "uploads/".basename($studentpass);
-    //     move_uploaded_file($_FILES['studentpass']['tmp_name'], $studentPa);
-    // }
+        $updateSign = "UPDATE `studentdocument` SET `signPhoto`='$studentS' WHERE `userID`='$uniqueId'";
+        $updateSignResult = mysqli_query($conn, $updateSign);
+    }
+    if(!empty($_FILES['NewPassbook']['name'])) {
+        $studentpass = $_FILES['NewPassbook']['name'];
+        $studentpass = time().$studentpass;
+        $studentPa = "uploads/".basename($studentpass);
+        move_uploaded_file($_FILES['NewPassbook']['tmp_name'], $studentPa);
 
-    // $addPhoto = "INSERT INTO `studentdocument` (`userPhoto`, `signPhoto`, `passPhoto`, `userID`) VALUES ('$studentP','$studentS','$studentPa','$uniqueId')";
-
-    // $addPersonal = mysqli_query($conn,$addPhoto);
-
-
+        $updatePass = "UPDATE `studentdocument` SET `passPhoto`='$studentPa' WHERE `userID`='$uniqueId'";
+        $updatePassResult = mysqli_query($conn, $updatePass);
+    }
     $qua = $_POST['qua'];
     $marks = $_POST['marks'];
     $identification = $_POST['identification'];
@@ -105,7 +100,7 @@ if(isset($_POST['updateProfile'])){
 
     $addBank = mysqli_query($conn,$updateBank);
 
-    if($addPersonal && $addPhoto && $addAcademic && $addEnroll && $addBank){
+    if($addPersonal && $addAcademic && $addEnroll && $addBank){
         header("Location: studentProfile.php");
     }else{
         echo "<script>alert('Something went wrong!')</script>";
