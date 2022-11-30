@@ -17,10 +17,10 @@ if(isset($_POST['attandee'])){
     $event_name = $eventDetailsResult['evName'];
     $sdate = $eventDetailsResult['startDate'];
     $edate = $eventDetailsResult['endDate'];
+    $eventPlace = $eventDetailsResult['place'];
+    $eventPhoto = $eventDetailsResult['campPhoto'];
     $participant = $eventDetailsResult['participant'];
-
-
-
+    $showCol = true;
 }else{
     header("Location: ./attendance.php");
 }
@@ -45,7 +45,17 @@ if(isset($_POST['attandee'])){
             <h3><?php echo $event_name; ?></h3>
             <p>Starting Date: <?php echo $sdate; ?></p>
             <p>Ending Date: <?php echo $edate; ?></p>
-
+            
+            <?php
+            $tdate = date("Y-m-d");
+            $date1 = strtotime($edate);
+            if($tdate > strtotime($edate)){
+                if($eventPhoto != "" || $eventPhoto != NULL){
+                    $showCol = false;
+                    echo "<div><img src='$eventPhoto' width='600px' height='250px' alt=''><p>Event Name: $event_name</p><p>Event Place: $eventPlace </p></div>";
+                }
+            }
+             ?>
             <h2 class="mt-3 mb-3">Attandance</h2>
             <table class="table table-bordered" style="text-align: center; border: 3px solid black;">
 
@@ -54,33 +64,45 @@ if(isset($_POST['attandee'])){
                     <th>Name</th>
                     <th>Reg. No.</th>
                     <th>Mobile No.</th>
-                    <th>Present</th>
+                    <?php 
+                    if($showCol){
+                        echo "<th>Present</th>";
+                    }
+                     ?>
                 </tr>
 
                 <?php 
                 $i = 1;
-                $participantArray = explode(",", $participant);
-                foreach($participantArray as $participant){
-                    $participantDetails = "SELECT * FROM `personaldetails` WHERE `userID` = '$participant'";
-                    $participantDetailsQuery = mysqli_query($conn, $participantDetails);
-                    $participantDetailsResult = mysqli_fetch_assoc($participantDetailsQuery);
-                    $fname = $participantDetailsResult['fname'];
-                    $lname = $participantDetailsResult['lname'];
-                    $mobileNo = $participantDetailsResult['contactNo'];
-                    $reg = "SELECT * FROM `student_credentials` WHERE `id` = '$participant'";
-                    $regQuery = mysqli_query($conn, $reg);
-                    $regResult = mysqli_fetch_assoc($regQuery);
-                    $regNo = $regResult['regNo'];
-                    echo "<tr>
-                    <td>$i</td>
-                    <td>$fname . $lname</td>
-                    <td>$regNo</td>
-                    <td>$mobileNo</td>
-                    <td>&nbsp;</td>
-                    </tr>";
-                    $i++;
+                if($participant != "" || $participant != NULL){
+                    $participantArray = explode(",", $participant);
+                    foreach($participantArray as $participant){
+                        $participantDetails = "SELECT * FROM `personaldetails` WHERE `userID` = '$participant'";
+                        $participantDetailsQuery = mysqli_query($conn, $participantDetails);
+                        $participantDetailsResult = mysqli_fetch_assoc($participantDetailsQuery);
+                        $fname = $participantDetailsResult['fname'];
+                        $lname = $participantDetailsResult['lname'];
+                        $mobileNo = $participantDetailsResult['contactNo'];
+                        $reg = "SELECT * FROM `student_credentials` WHERE `id` = '$participant'";
+                        $regQuery = mysqli_query($conn, $reg);
+                        $regResult = mysqli_fetch_assoc($regQuery);
+                        $regNo = $regResult['regNo'];
+                        echo "<tr>
+                        <td>$i</td>
+                        <td>$fname . $lname</td>
+                        <td>$regNo</td>
+                        <td>$mobileNo</td>";
+                        if($showCol){
+                            echo "<td>&nbsp;</td>";
+                        }
+                        echo "</tr>";
+                        $i++;
+
+                    }
+                }else{
+                    echo "<tr><td colspan='5'>No Participant</td></tr>";
+
                 }
-                ?>
+                 ?>
             </table>
 
         </center>

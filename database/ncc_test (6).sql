@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 29, 2022 at 01:21 PM
+-- Generation Time: Nov 30, 2022 at 06:46 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -124,7 +124,9 @@ CREATE TABLE `event_handle` (
 --
 
 INSERT INTO `event_handle` (`id`, `evName`, `evDetails`, `startDate`, `endDate`, `participant`, `notInterested`, `place`, `typeOfEvent`, `campPhoto`, `anoId`, `future1`, `future2`, `future3`) VALUES
-(1, 'Summer Camp', 'We have to decided to held a camp in this summer vacation . I know you have waited for this long time so this is it. We are finally going to camp. In this camp we are gonna do all the activities like, tracking, cycling, camping, etc.', '2022-11-30', '2022-12-01', '4', '', NULL, 0, NULL, NULL, NULL, NULL, NULL);
+(1, 'Summer Camp', 'We have to decided to held a camp in this summer vacation . I know you have waited for this long time so this is it. We are finally going to camp. In this camp we are gonna do all the activities like, tracking, cycling, camping, etc.', '2022-11-30', '2022-11-29', NULL, '', 'Maharashtra', 0, 'uploads/1669807346Gnu.png', NULL, NULL, NULL, NULL),
+(2, 'Winter Camp', 'winter camp ooohoooooo', '2022-12-01', '2022-12-04', NULL, NULL, 'Jammu Kashmir', 1, NULL, 1, NULL, NULL, NULL),
+(3, 'Republic Parade', 'paradeeee', '2022-11-28', '2022-11-29', NULL, NULL, 'Jammu Kashmir', 0, NULL, 1, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -214,7 +216,7 @@ CREATE TABLE `studentdocument` (
 --
 
 INSERT INTO `studentdocument` (`docID`, `userPhoto`, `signPhoto`, `passPhoto`, `userID`, `future1`, `future2`) VALUES
-(2, 'uploads/16688620589de034bd03feb13f6c6a01045537b58e.jpg', 'uploads/1668862058anime-one-piece-monkey-d-luffy-nami-one-piece-wallpaper-preview.jpg', 'uploads/1668862058one piece nico robin pirates roronoa zoro chopper brook anime manga franky tony tony chopper monkey_www.wallpaperhi.com_2.jpg', 4, NULL, NULL);
+(2, 'uploads/1669805119one piece nico robin pirates roronoa zoro chopper brook anime manga franky tony tony chopper monkey_www.wallpaperhi.com_2.jpg', 'uploads/1669805119identiCard.jpg', 'uploads/1669805119identiCard.jpg', 4, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -238,7 +240,7 @@ CREATE TABLE `student_credentials` (
 --
 
 INSERT INTO `student_credentials` (`id`, `email`, `password`, `anoID`, `regNo`, `rank`, `future2`, `active_status`) VALUES
-(4, 'mrmayank6877@gmail.com', '30f1ab9949bc865d3a616513ee2e6b2e', 1, 'GJ/20/SDA/110132', 3, NULL, 1),
+(4, 'mrmayank6877@gmail.com', '25d55ad283aa400af464c76d713c07ad', 1, 'GJ/20/SDA/110132', 0, NULL, 1),
 (5, 'sannin6877@gmail.com', 'e99a18c428cb38d5f260853678922e03', 1, NULL, 3, NULL, 1),
 (6, 'govind@duck.com', '9165ba72edd3216eace6efa743fece99', 0, NULL, 2, NULL, 1);
 
@@ -320,7 +322,7 @@ ALTER TABLE `bankdetails`
 -- AUTO_INCREMENT for table `event_handle`
 --
 ALTER TABLE `event_handle`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `nccinterest`

@@ -169,7 +169,7 @@ if(!isset($_SESSION['userType'])){
                         <th scope="col">Sr. No</th>
                         <th scope="col">Event</th>
                         <th scope="col">Event Details</th>
-                        <!-- <th scope="col">Attendance sheet</th> -->
+                        <th scope="col">Report </th>
 
                     </tr>
                 </thead>
@@ -186,6 +186,7 @@ if(!isset($_SESSION['userType'])){
                             echo "<td>".$i."</td>";
                             echo "<td>".$row['evName']."</td>";
                             echo "<td> " .$row['evDetails']. "</td>";
+                            echo "<td>"; ?>  <form action="viewAttendee.php" method="post"><input type="hidden" name="evId" value="<?php echo $row['id']; ?>" > <button style="padding: 0.5rem 0.7rem; background-color: #35b729;" type="submit" class="btn btn-sm text-light" name="attandee" >Report</button></form> <?php echo "</td>";
                             echo "</tr>";
                             $i++;
                         }
