@@ -108,6 +108,9 @@ if(isset($_POST['no'])){
                             <a class="nav-link text-light" href="student_events.php">Events</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-light" href="studentProfile.php">Update Profile</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-light" href="logout.php">Logout</a>
                         </li>
                     </ul>

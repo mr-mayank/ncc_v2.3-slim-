@@ -7,13 +7,15 @@ include ('database/include.php');
 if (isset($_POST['addStudent'])) {
    
     $email = $_POST['email'];
-    $searchUser = "SELECT * FROM `student_credentials` WHERE `email` = ? AND `active_status` =  1";
-    $queryForUser = $conn->prepare($searchUser);
-    $queryForUser->bind_param("s", $email);
-    $queryForUser->execute();
-    $userFound = $queryForUser->get_result();
+    $searchUser = "SELECT * FROM `student_credentials` WHERE `email` = '$email' AND `active_status` =  1";
+    $queryForUser = mysqli_query($conn, $searchUser);
+    $row = mysqli_fetch_array($queryForUser);
+    // $queryForUser = $conn->prepare($searchUser);
+    // $queryForUser->bind_param("s", $email);
+    // $queryForUser->execute();
+    // $userFound = $queryForUser->get_result();
 
-    if ($userFound->num_rows < 1) {
+    if (mysqli_num_rows($queryForUser) < 1) {
         
         $chars =  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
         $number = '0123456789';
@@ -56,22 +58,18 @@ if (isset($_POST['addStudent'])) {
 
             $mail->send();
             echo "Mail has been sent successfully!";
-            $response = 1;
-        } catch (Exception $e) {
-            $response = 0;
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-        }
-        if ($response) {
-            $sql = $conn->prepare("INSERT INTO `student_credentials`(`email`, `password`, `active_status`) VALUES (?,?,?)");
             $password = md5($password);
-            $sql->bind_param("ssi", $email, $password, $status);
-            if ($sql->execute()) {
+            $anoId = $_POST['anoId'];
+            $insertCadet = "INSERT INTO `student_credentials`(`email`, `password`, `anoID`, `active_status`) VALUES ('$email', '$password', '$anoId', '$status')";
+            if (mysqli_query($conn, $insertCadet)) {
                 echo "<script>alert('Check your mail for login credentials.')</script>";
-                echo "<script>window.open('./signin.php','_self')</script>";
+                header("Location: ./signin.php");
             } else {
                 echo "<script>alert('Error in adding details')</script>";
-                echo "<script>window.open('./signup.php','_self')</script>";
+                header("Location: ./signup.php");
             }
+        } catch (Exception $e) {
+            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
     } else {
         echo "<script>alert(`User already exits 🛑\nCheck your mail for login credentials if forgotten and then login to portal.`)</script>";

@@ -133,7 +133,7 @@ if(!isset($_SESSION['userType'])){
                             <td>" . $row1['fname'] ." ". $row1['lname'] ."</td>
                             <td>" . $row1['contactNo'] . "</td>
                             <td>" . $row1['email'] . "</td>
-                            <td><form action='details.php' method='post'> <input type='hidden' name='id' value='" . $row['id'] . "'> <button name='showDetails' type='submit' class='btn text-center mt-3 text-light' style='background-color: #35b729;'>View</button> </form></td>
+                            <td><form action='studentProfile.php' method='post'> <input type='hidden' name='id' value='" . $row['id'] . "'> <button name='showDetails' type='submit' class='btn text-center mt-3 text-light' style='background-color: #35b729;'>View</button> </form></td>
                         </tr>";
                         }
                       else{
@@ -143,7 +143,7 @@ if(!isset($_SESSION['userType'])){
                         <td>Not Updated</td>
                         <td>Not Updated</td>
                         <td>".$row['email']."</td>
-                        <td><form action='details.php' method='post'> <input type='hidden' name='id' value='" . $row['id'] . "'> <button name='showDetails' type='submit' class='btn text-center mt-3 text-light' style='background-color: #35b729;' disabled >View</button> </form></td>
+                        <td><form action='studentProfile.php' method='post'> <input type='hidden' name='id' value='" . $row['id'] . "'> <button name='showDetails' type='submit' class='btn text-center mt-3 text-light' style='background-color: #35b729;' disabled >View</button> </form></td>
                     </tr>";
 
                       }

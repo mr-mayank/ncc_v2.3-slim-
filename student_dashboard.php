@@ -1,5 +1,5 @@
 <?php
-session_start();
+include ('database/include.php');
 if(!isset($_SESSION['userType'])){
     header("Location: ./signin.php");
 }else{
@@ -9,6 +9,7 @@ if(!isset($_SESSION['userType'])){
         header("Location: ./signin.php");
     }
 }
+$_SESSION['updateID'] = $_SESSION['userId'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,6 +49,9 @@ if(!isset($_SESSION['userType'])){
                             <a class="nav-link text-light" href="student_events.php">Events</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-light" href="studentProfile.php">Update Profile</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-light" href="logout.php">Logout</a>
                         </li>
                     </ul>
@@ -57,26 +61,44 @@ if(!isset($_SESSION['userType'])){
     </section>
 
     <section>
-        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="images/image4.jpg" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                    <img src="images/image2.png" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                    <img src="images/image3.jpg" class="d-block w-100" alt="...">
-                </div>
+    <div class="container">
+            <div class="row">
+                <?php
+                    $searchRank = "SELECT * FROM `student_credentials` WHERE `rank` != 5 ";
+                    $result = mysqli_query($conn, $searchRank);
+                    while($row = mysqli_fetch_assoc($result)){
+                        echo "<div class='col-md-4  my-3'>";
+                        echo "<div class='card'>";
+                        $searchPhoto = "SELECT * FROM `studentdocument` WHERE `userID` = '$row[id]'";
+                        $resultPhoto = mysqli_query($conn, $searchPhoto);
+                        if(mysqli_num_rows($resultPhoto) > 0){
+                            $userPhoto = mysqli_fetch_assoc($resultPhoto);
+                            $photo = $userPhoto['userPhoto'];
+                        }else{
+                            $photo = "uploads/1668860768one piece nico robin pirates roronoa zoro chopper brook anime manga franky tony tony chopper monkey_www.wallpaperhi.com_2.jpg";                            
+                        }
+                       
+                        echo "<img src='". $photo ." class='card-img-top img-fluid' alt='...'>";
+                        echo "<div class='card-body'>";
+                        echo "<h5 class='card-title'>";
+                        if($row['rank'] == '0'){
+                            echo "SUO";
+                        } else if(['rank'] == '1'){
+                            echo "CUO";
+                        } else if(['rank'] == '2'){
+                            echo "SGT";
+                        } else if(['rank'] == '3'){
+                            echo "CPL";
+                        } else {
+                            echo "LCPL";
+                        }
+                        echo "</h5>";
+                        echo "</div>";
+                        echo "</div>";
+                        echo "</div>";
+                    }
+                ?>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
         </div>
     </section>
     <section class="mt-1 p-5">
