@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2022 at 06:46 PM
+-- Generation Time: Dec 01, 2022 at 10:36 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -47,7 +47,8 @@ CREATE TABLE `aceddemicdetails` (
 --
 
 INSERT INTO `aceddemicdetails` (`acID`, `qualify`, `marks`, `idMarks`, `isCrime`, `circumCrime`, `schoolType`, `stream`, `schoolName`, `userID`, `future1`, `future2`) VALUES
-(8, '10', '78', 'NA', 'No', '', 'School', 'Science', '', 4, NULL, NULL);
+(8, '10', '78', 'NA', 'No', 'no circum', 'School', 'Science', 'vishwakarma', 4, NULL, NULL),
+(9, '12', '78', 'NA', 'No', 'no circum', 'Collgege', 'Science', 'vishwakaram', 5, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -94,7 +95,8 @@ CREATE TABLE `bankdetails` (
 --
 
 INSERT INTO `bankdetails` (`bankID`, `ifscCode`, `accountNo`, `adharNo`, `panNo`, `userID`, `future1`, `future2`) VALUES
-(5, '7894561230', '789456123456', '987654321654', '456789123456', 4, NULL, NULL);
+(5, '7894561230', '789456123456', '987654321654', '456789123456', 4, NULL, NULL),
+(6, '98765432145', '2640788965465', '789456123456', '789456123456', 5, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -114,7 +116,7 @@ CREATE TABLE `event_handle` (
   `typeOfEvent` int(10) NOT NULL DEFAULT 0,
   `campPhoto` varchar(200) DEFAULT NULL,
   `anoId` int(200) DEFAULT NULL,
-  `future1` varchar(255) DEFAULT NULL,
+  `evCreate` varchar(200) DEFAULT NULL,
   `future2` varchar(255) DEFAULT NULL,
   `future3` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -123,10 +125,10 @@ CREATE TABLE `event_handle` (
 -- Dumping data for table `event_handle`
 --
 
-INSERT INTO `event_handle` (`id`, `evName`, `evDetails`, `startDate`, `endDate`, `participant`, `notInterested`, `place`, `typeOfEvent`, `campPhoto`, `anoId`, `future1`, `future2`, `future3`) VALUES
-(1, 'Summer Camp', 'We have to decided to held a camp in this summer vacation . I know you have waited for this long time so this is it. We are finally going to camp. In this camp we are gonna do all the activities like, tracking, cycling, camping, etc.', '2022-11-30', '2022-11-29', NULL, '', 'Maharashtra', 0, 'uploads/1669807346Gnu.png', NULL, NULL, NULL, NULL),
-(2, 'Winter Camp', 'winter camp ooohoooooo', '2022-12-01', '2022-12-04', NULL, NULL, 'Jammu Kashmir', 1, NULL, 1, NULL, NULL, NULL),
-(3, 'Republic Parade', 'paradeeee', '2022-11-28', '2022-11-29', NULL, NULL, 'Jammu Kashmir', 0, NULL, 1, NULL, NULL, NULL);
+INSERT INTO `event_handle` (`id`, `evName`, `evDetails`, `startDate`, `endDate`, `participant`, `notInterested`, `place`, `typeOfEvent`, `campPhoto`, `anoId`, `evCreate`, `future2`, `future3`) VALUES
+(1, 'Summer Camp', 'We have to decided to held a camp in this summer vacation . I know you have waited for this long time so this is it. We are finally going to camp. In this camp we are gonna do all the activities like, tracking, cycling, camping, etc.', '2022-11-30', '2022-11-29', '4, 5', '', 'Maharashtra', 1, 'uploads/1669807346Gnu.png', 1, '2022-11-30', NULL, NULL),
+(2, 'Winter Camp', 'winter camp ', '2022-12-02', '2022-12-04', '4', NULL, 'Jammu Kashmir', 1, NULL, 1, '2022-12-01', NULL, NULL),
+(3, 'Republic Parade', 'paradeeee', '2022-11-28', '2022-11-29', NULL, NULL, 'Jammu Kashmir', 0, NULL, 1, '2022-11-30', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -155,7 +157,8 @@ CREATE TABLE `nccinterest` (
 --
 
 INSERT INTO `nccinterest` (`inId`, `nccWill`, `nccUnit`, `enrollNcc`, `enrollment`, `dissmissed`, `dissmissedDetails`, `nameKin`, `telephoneKin`, `relationKin`, `userID`, `future1`, `future2`) VALUES
-(5, '', '', 'No', '', 'Yes', '', 'mayank', '9313268918', 'mayank', 4, NULL, NULL);
+(5, 'Yes', '1 GUJ CTC NCC AHMEDABAD', 'No', '', 'Yes', '', 'mayank', '9313268918', 'mayank', 4, NULL, NULL),
+(6, 'No', '1 GUJ CTC NCC AHMEDABAD', 'No', '0', 'No', 'no \r\n                                ', 'Mayank', '7894561230', 'Brother', 5, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -193,7 +196,8 @@ CREATE TABLE `personaldetails` (
 --
 
 INSERT INTO `personaldetails` (`pid`, `fname`, `lname`, `mname`, `birthDate`, `nationality`, `fatherFname`, `fatherLname`, `fatherMname`, `motherFname`, `motherLname`, `motherMname`, `address`, `contactNo`, `email`, `gender`, `blood`, `nrRailway`, `nrPolice`, `userID`, `future1`, `future2`) VALUES
-(18, 'mayank', 'dilipbhai', 'patel', '2022-11-26', '', 'mayhank', 'amnksh', 'mayahnk', 'mayank', 'mayank', 'jmayahnk', 'ukai ukai ', '9313268612', 'mrmayank6877@gmail.com', 'Male', 'A+', 'ahmedabad', '', 4, NULL, NULL);
+(18, 'mayank', 'dilipbhai', 'patel', '2022-11-26', '', 'mayhank', 'amnksh', 'mayahnk', 'mayank', 'mayank', 'jmayahnk', 'ukai ukai ', '9313268612', 'mrmayank6877@gmail.com', 'Male', 'A+', 'ahmedabad', '', 4, NULL, NULL),
+(19, 'Govind ', 'Patel', 'Mayank', '2022-11-30', 'indian', 'Mayank', 'Patel', 'Govind', 'Varshaben', 'Patel', 'D', 'ukai ukai', '7894561230', 'sannin6877@gmail.com', 'Male', 'A+', 'Ukai', 'Ukai', 5, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -216,7 +220,8 @@ CREATE TABLE `studentdocument` (
 --
 
 INSERT INTO `studentdocument` (`docID`, `userPhoto`, `signPhoto`, `passPhoto`, `userID`, `future1`, `future2`) VALUES
-(2, 'uploads/1669805119one piece nico robin pirates roronoa zoro chopper brook anime manga franky tony tony chopper monkey_www.wallpaperhi.com_2.jpg', 'uploads/1669805119identiCard.jpg', 'uploads/1669805119identiCard.jpg', 4, NULL, NULL);
+(2, 'uploads/1669805119one piece nico robin pirates roronoa zoro chopper brook anime manga franky tony tony chopper monkey_www.wallpaperhi.com_2.jpg', 'uploads/1669805119identiCard.jpg', 'uploads/1669805119identiCard.jpg', 4, NULL, NULL),
+(3, 'uploads/1669870006identiCard.jpg', 'uploads/1669870006one piece nico robin pirates roronoa zoro chopper brook anime manga franky tony tony chopper monkey_www.wallpaperhi.com_2.jpg', 'uploads/1669870006Screenshot 2022-10-04 225145.png', 5, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -241,7 +246,7 @@ CREATE TABLE `student_credentials` (
 
 INSERT INTO `student_credentials` (`id`, `email`, `password`, `anoID`, `regNo`, `rank`, `future2`, `active_status`) VALUES
 (4, 'mrmayank6877@gmail.com', '25d55ad283aa400af464c76d713c07ad', 1, 'GJ/20/SDA/110132', 0, NULL, 1),
-(5, 'sannin6877@gmail.com', 'e99a18c428cb38d5f260853678922e03', 1, NULL, 3, NULL, 1),
+(5, 'sannin6877@gmail.com', '25d55ad283aa400af464c76d713c07ad', 1, 'GJ/20/SDA/110132', 3, NULL, 1),
 (6, 'govind@duck.com', '9165ba72edd3216eace6efa743fece99', 0, NULL, 2, NULL, 1);
 
 --
@@ -304,7 +309,7 @@ ALTER TABLE `student_credentials`
 -- AUTO_INCREMENT for table `aceddemicdetails`
 --
 ALTER TABLE `aceddemicdetails`
-  MODIFY `acID` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `acID` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `admin_credentials`
@@ -316,7 +321,7 @@ ALTER TABLE `admin_credentials`
 -- AUTO_INCREMENT for table `bankdetails`
 --
 ALTER TABLE `bankdetails`
-  MODIFY `bankID` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `bankID` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `event_handle`
@@ -328,19 +333,19 @@ ALTER TABLE `event_handle`
 -- AUTO_INCREMENT for table `nccinterest`
 --
 ALTER TABLE `nccinterest`
-  MODIFY `inId` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `inId` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `personaldetails`
 --
 ALTER TABLE `personaldetails`
-  MODIFY `pid` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `pid` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `studentdocument`
 --
 ALTER TABLE `studentdocument`
-  MODIFY `docID` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `docID` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `student_credentials`

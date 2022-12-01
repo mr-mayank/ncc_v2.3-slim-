@@ -91,10 +91,12 @@ if(!isset($_SESSION['userType'])){
                     while($row = mysqli_fetch_array($eventDetailsQuery)){
                         $tdate = date('Y-m-d');
                         $date = $row['endDate'];
+                        $create = $row['evCreate'];
+                        
                         if($date > $tdate){
                             echo "<tr>";
                             echo "<td>".$i."</td>";
-                            echo "<td>".$row['evName']."</td>";
+                            echo "<td>".$row['evName']. "($create)" . "</td>";
                             echo "<td>"; ?>  <form action="viewAttendee.php" method="post"><input type="hidden" name="evId" value="<?php echo $row['id']; ?>" > <button style="padding: 0.5rem 0.7rem; background-color: #35b729;" type="submit" class="btn btn-sm text-light" name="attandee" >Report</button></form> <?php echo "</td>";
                             echo "</tr>";
                             $i++;
@@ -135,7 +137,7 @@ if(!isset($_SESSION['userType'])){
                         if($date < $tdate && ($row['campPhoto'] == NULL || $row['campPhoto'] == '')) {
                             echo "<tr>";
                             echo "<td>".$i."</td>";
-                            echo "<td>".$row['evName']."</td>";
+                            echo "<td>".$row['evName']. "($create)" ."</td>";
 
                             ?>
                             <form enctype="multipart/form-data" method="POST" action="addCampPhoto.php">
@@ -170,6 +172,7 @@ if(!isset($_SESSION['userType'])){
                         <th scope="col">Event</th>
                         <th scope="col">Event Details</th>
                         <th scope="col">Report </th>
+                        <th scope="col">Print CATC Report </th>
 
                     </tr>
                 </thead>
@@ -184,9 +187,10 @@ if(!isset($_SESSION['userType'])){
                         if($date < $tdate){
                             echo "<tr>";
                             echo "<td>".$i."</td>";
-                            echo "<td>".$row['evName']."</td>";
+                            echo "<td>".$row['evName']. "($create)" ."</td>";
                             echo "<td> " .$row['evDetails']. "</td>";
-                            echo "<td>"; ?>  <form action="viewAttendee.php" method="post"><input type="hidden" name="evId" value="<?php echo $row['id']; ?>" > <button style="padding: 0.5rem 0.7rem; background-color: #35b729;" type="submit" class="btn btn-sm text-light" name="attandee" >Report</button></form> <?php echo "</td>";
+                            echo "<td>"; ?>  <form action ="viewAttendee.php" method="post"><input type="hidden" name="evId" value="<?php echo $row['id']; ?>" > <button style="padding: 0.5rem 0.7rem; background-color: #35b729;" type="submit" class="btn btn-sm text-light" name="attandee" >Report</button></form> <?php echo "</td>";
+                            echo "<td>"; ?>  <form action ="CATCReport.php" method="post"><input type="hidden" name="evId" value="<?php echo $row['id']; ?>" > <button style="padding: 0.5rem 0.7rem; background-color: #35b729;" type="submit" class="btn btn-sm text-light" name="CATCattandee" >Report</button></form> <?php echo "</td>";
                             echo "</tr>";
                             $i++;
                         }

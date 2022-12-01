@@ -1,3 +1,31 @@
+<?php
+include('database/include.php');
+if(!isset($_SESSION['userType'])){
+    header("Location: ./signin.php");
+}else{
+    if($_SESSION['userType'] != 'admin'){
+        session_unset();
+        session_destroy();
+        header("Location: ./signin.php");
+    }
+}
+
+if(isset($_POST['CATCattandee'])){
+    $id = $_POST['evId'];
+    $eventDetails = "SELECT * FROM `event_handle` WHERE `id` = '$id'";
+    $eventDetailsQuery =  mysqli_query($conn, $eventDetails);
+    $eventDetailsResult = mysqli_fetch_assoc($eventDetailsQuery);
+    $event_name = $eventDetailsResult['evName'];
+    $sdate = $eventDetailsResult['startDate'];
+    $edate = $eventDetailsResult['endDate'];
+    $eventPlace = $eventDetailsResult['place'];
+    $eventPhoto = $eventDetailsResult['campPhoto'];
+    $participant = $eventDetailsResult['participant'];
+    $showCol = true;
+}else{
+    header("Location: ./attendance.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -96,7 +124,40 @@
 </head>
 
 <body>
-    <center>
+<center>
+        <input type="button" value="Print Registration Form" onclick="makepdf('form')">
+    </center>
+    
+                    <?php
+                if($participant != "" || $participant != NULL){
+                    $participantArray = explode(",", $participant);
+                    foreach($participantArray as $participant){
+                        $participantDetails = "SELECT * FROM `personaldetails` WHERE `userID` = '$participant'";
+                        $participantDetailsQuery = mysqli_query($conn, $participantDetails);
+                        $participantDetailsResult = mysqli_fetch_assoc($participantDetailsQuery);
+                        $fname = $participantDetailsResult['fname'];
+                        $lname = $participantDetailsResult['lname'];
+                        $dob = $participantDetailsResult['birthDate'];
+                        $mobileNo = $participantDetailsResult['contactNo'];
+                        $address = $participantDetailsResult['address'];
+                        $fatherFname = $participantDetailsResult['fatherFname'];
+                        $fatherLname = $participantDetailsResult['fatherLname'];
+                        $reg = "SELECT * FROM `student_credentials` WHERE `id` = '$participant'";
+                        $regQuery = mysqli_query($conn, $reg);
+                        $regResult = mysqli_fetch_assoc($regQuery);
+                        $rank = $regResult['rank'];
+                        $regNo = $regResult['regNo'];
+                        $aceddemicdetailsDetails = "SELECT * FROM `aceddemicdetails` WHERE `userID` = '$participant'";
+                        $aceddemicdetailsDetailsQuery = mysqli_query($conn, $aceddemicdetailsDetails);
+                        $aceddemicdetailsDetailsResult = mysqli_fetch_assoc($aceddemicdetailsDetailsQuery);
+                        $school = $aceddemicdetailsDetailsResult['schoolType'];
+                        $nccinterestDetails = "SELECT * FROM `nccinterest` WHERE `userID` = '$participant'";  
+                        $nccinterestDetailsQuery = mysqli_query($conn, $nccinterestDetails);
+                        $nccinterestDetailsResult = mysqli_fetch_assoc($nccinterestDetailsQuery);
+                        $relation = $nccinterestDetailsResult['relationKin'];
+
+                        echo '
+                        <center>
         <div id="form">
             <div class="container">
 
@@ -109,9 +170,16 @@
                 <br>
                 <div class="grid-container name">
                     <div class="grid-item">Name of Camp/Courses/Expendition:</div>
-                    <div class="grid-item">
 
-                        ________________________________
+                    <div class="grid-item" style="border-bottom:1px solid black ;">
+                        ';
+                        ?>
+                        <?php 
+
+                        echo $event_name;
+                        ?>
+                       <?php 
+                        echo '
                     </div>
                 </div>
 
@@ -119,42 +187,93 @@
                     <div class="grid-item">
                         Place:
                     </div>
-                    <div class="grid-item">
-                        ____________
+                    <div class="grid-item" style="border-bottom:1px solid black ;">
+                       ';
+                          ?>
+                        <?php
+                        echo $eventPlace;
+                        ?>
+                        <?php
+                        echo '
                     </div>
                     <div class="grid-item">
                         From:
                     </div>
-                    <div class="grid-item">
-                        ____________
+                    <div class="grid-item" >
+                        ';
+                        ?>
+                        <?php
+                        echo $sdate;
+                        ?>
+                        <?php
+                        echo '
+
                     </div>
                     <div class="grid-item">
                         To:
                     </div>
-                    <div class="grid-item">
-                        ______________
+                    <div class="grid-item" style="border-bottom:1px solid black ;">
+                        ';
+                        ?>
+                        <?php
+                        echo $edate;
+                        ?>
+                        <?php
+                        echo '
                     </div>
                 </div>
                 <div class="grid-container sixparts2">
                     <div class="grid-item">
                         Regtl No:
                     </div>
-                    <div class="grid-item">
-                        ______________
+                    <div class="grid-item" style="border-bottom:1px solid black ;">
+                        ';
+                        ?>
+                        <?php
+                        echo $regNo;
+                        ?>
+                        <?php
+                        echo '
                     </div>
 
                     <div class="grid-item">
                         Rank:
                     </div>
-                    <div class="grid-item">
-                        ___________
+                    <div class="grid-item" style="border-bottom:1px solid black ;">
+                        ';
+                        ?>
+                        <?php
+                        if($rank == 0){
+                            echo "SUO";
+                        }
+                        else if($rank == 1){
+                            echo "CUO";
+                        }else if($rank == 2){
+                            echo "SGT";
+                        }else if($rank == 3){
+                            echo "CPL";
+                        }else if($rank == 4){
+                            echo "LCPL";
+                        }else if($rank == 5){
+                            echo "Cadet";
+                        }
+                        
+                        ?>
+                        <?php
+                        echo '
                     </div>
 
                     <div class="grid-item">
                         Date of birth:
                     </div>
-                    <div class="grid-item">
-                        ____________
+                    <div class="grid-item" style="border-bottom:1px solid black ;">
+                        ';
+                        ?>
+                        <?php
+                        echo $dob;
+                        ?>
+                        <?php
+                        echo '
                     </div>
 
                 </div>
@@ -162,16 +281,28 @@
                     <div class="grid-item">
                         Name:
                     </div>
-                    <div class="grid-item">
-                        ______________________________________________
+                    <div class="grid-item" style="border-bottom:1px solid black ;">
+                        ';
+                        ?>
+                        <?php
+                        echo $fname . " " . $lname;
+                        ?>
+                        <?php
+                        echo '
                     </div>
                 </div>
                 <div class="grid-container scl">
                     <div class="grid-item">
                         School/College:
                     </div>
-                    <div class="grid-item">
-                        __________________________________________
+                    <div class="grid-item" style="border-bottom:1px solid black ;">
+                        ';
+                        ?>
+                        <?php
+                        echo $school;
+                        ?>
+                        <?php
+                        echo '  
                     </div>
                 </div>
                 <div class="grid-container parts2">
@@ -186,7 +317,10 @@
                 <center>
                     <u style="font-weight: bold; font-size:larger">RISK VOLUNTEERING & SAFETY PRECAUTION CERTIFICATE</u>
                 </center>
-                <br>
+                <br>    
+                ';
+                   
+                ?>
                 <p class="para" style="font-size: larger;">&nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; Volunteer to attend the above Camp/Course/Competition at my own risk. I also know that their may be<br> deep &nbsp; water &nbsp; near the Camp site & area near the &nbsp; water edge is 'OUT OF BOUNDS' to cadets.&nbsp; &nbsp; I shall be doing <br> so entirely at my own risk.</p>
                 <div class="grid-container space">
                     <div class="grid-item ">
@@ -208,28 +342,36 @@
                 </div>
                 <br>
                 <div class="grid-container parts">
-                    <div class="grid-item">
+                    <div class="grid-item" >
                         Address:
                     </div>
-                    <div class="grid-item">
-                        ___________
+                    <div class="grid-item" style="border-bottom:1px solid black ;">
+                      <?php 
+                        echo $address;
+                        ?>
                     </div>
                     <div class="grid-item">
                         Name:
                     </div>
-                    <div class="grid-item">
-                        _______________
+                    <div class="grid-item" style="border-bottom:1px solid black ;">
+                       <?php 
+
+                        echo $fatherFname . " " . $fatherLname;
+                        ?>
                     </div>
                 </div>
                 <div class="grid-container parts3">
-                    <div class="grid-item">
-                        ____________
+                    <div class="grid-item" style="border-bottom:1px solid black ;">
+                     
                     </div>
                     <div class="grid-item">
                         Relation:
                     </div>
-                    <div class="grid-item">
-                        _______________
+                    <div class="grid-item" style="border-bottom:1px solid black ;">
+                       <?php 
+
+                        echo $relation;
+                        ?>
                     </div>
 
                 </div>
@@ -237,8 +379,12 @@
                     <div class="grid-item">
                         Telephone No. (Res/Mob/P.P)
                     </div>
-                    <div class="grid-item">
-                        ______________
+                    <div class="grid-item" style="border-bottom:1px solid black ;">
+                        <?php 
+
+                        echo $mobileNo;
+                 
+                        ?>
                     </div>
                 </div>
                 <br>
@@ -281,12 +427,20 @@
                     <div class="grid-item">Date:</div><br><br>
                 </div>
             </div>
+            <?php
+               }
+            }else{
+                echo "<script>alert('No Record Found')</script>
+                <script>window.location.href='attendance.php'</script>";
+                
+            }
+            ?>
 
 
             <!--############################################### second time form  ######################################################-->
 
 
-            <div class="container">
+            <!-- <div class="container">
 
                 <center>
                     <h2><u>1 GUJARAT COMPO TECH COY NCC, AHMEDABAD</u></h2>
@@ -468,13 +622,11 @@
                 <div class="grid-container">
                     <div class="grid-item">Date:</div>
                 </div>
-            </div>
+            </div> -->
 
     </center>
     </div>
-    <center>
-        <input type="button" value="Print Registration Form" onclick="makepdf('form')">
-    </center>
+   
 
     <script>
         function makepdf(form) {

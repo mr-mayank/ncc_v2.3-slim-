@@ -89,6 +89,7 @@ $eventDetailsQuery =  mysqli_query($conn, $eventDetails);
                 $result = mysqli_query($conn, $sql);
                 $row = mysqli_fetch_assoc($result);
                 $evName = $row['evName'];
+                $type = $row['typeOfEvent'];
                 $evDetails = $row['evDetails'];
                 $startDate = $row['startDate'];
                 $endDate = $row['endDate'];
@@ -99,6 +100,31 @@ $eventDetailsQuery =  mysqli_query($conn, $eventDetails);
                     </center>
                 <form action='EditEvent.php' method='POST'>
                 <div class='data p-2 mt-4' style='border: 1px solid black;'>
+                <div class='form-group mt-3'>
+                <div class='row' style='justify-content:center'>
+                <div class='col-sm-3'>
+                        <label for=' class='col-form-label'>Event Type</label>
+                    </div>
+                <div class='col-sm-6'> ";
+                ?>
+                
+                <input type="radio" id= "sex"
+                        <?php if ($type == "0") {
+                            echo "checked";
+                        }
+                        ?> name="eventType" value="0" style="width: auto;margin-right: 1rem;">
+                         Normal Event
+                        <input type="radio" id="sex" 
+                        <?php if ($type == "1") {
+                            echo "checked";
+                        }
+                        ?> name="eventType" value="1" style="width: auto;margin-right: 1rem;margin-left: 1.5rem" >
+                         Camp Event
+                </div>
+            </div>
+        </div>
+        <?php 
+        echo "
                 <div class='form-group mt-3'>
                 <div class='row' style='justify-content:center'>
                 <div class='col-sm-3'>

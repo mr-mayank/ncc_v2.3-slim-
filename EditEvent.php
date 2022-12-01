@@ -12,15 +12,17 @@ if(!isset($_SESSION['userType'])){
 }
 
 if(isset($_POST['EditEvent'])){
+    $type = $_POST['eventType'];
     $eventName = $_POST['eventName'];
     $eventDetails = $_POST['eventDetails'];
     $startDate = $_POST['startDate'];
     $endDate = $_POST['endDate'];
+    $create = date("Y-m-d");
     $id = $_POST['evId'];
 
-    $insertEvent = "UPDATE `event_handle` SET `evName`=?,`evDetails`=?,`startDate`=?,`endDate`=? WHERE `id`=?";
+    $insertEvent = "UPDATE `event_handle` SET `evName`=?,`evDetails`=?,`startDate`=?,`endDate`=?, `typeOfEvent`=?, `evCreate`=? WHERE `id`=?";
     $insertEventQuery = $conn->prepare($insertEvent);
-    $insertEventQuery->bind_param("ssssi", $eventName, $eventDetails, $startDate, $endDate, $id);
+    $insertEventQuery->bind_param("ssssisi", $eventName, $eventDetails, $startDate, $endDate, $type, $create, $id);
     $insertEventQuery->execute();
     if($insertEventQuery){
         echo "<script>alert('Event Updated Successfully !!')</script>";

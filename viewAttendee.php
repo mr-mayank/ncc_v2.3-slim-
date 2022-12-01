@@ -39,6 +39,13 @@ if(isset($_POST['attandee'])){
 <body>
     <div class="container mt-3" id="nccAttandanceForm">
         <center>
+        <h2>
+                Vishwakarma Government Engineering College
+
+            </h2>
+            <h2>
+                National cadet corps
+            </h2>
             <h2>
                 Event
             </h2>
@@ -61,8 +68,8 @@ if(isset($_POST['attandee'])){
 
                 <tr>
                     <th>Sr. No.</th>
-                    <th>Name</th>
                     <th>Reg. No.</th>
+                    <th>Name</th>
                     <th>Mobile No.</th>
                     <?php 
                     if($showCol){
@@ -88,8 +95,8 @@ if(isset($_POST['attandee'])){
                         $regNo = $regResult['regNo'];
                         echo "<tr>
                         <td>$i</td>
-                        <td>$fname . $lname</td>
                         <td>$regNo</td>
+                        <td>$fname . $lname</td>
                         <td>$mobileNo</td>";
                         if($showCol){
                             echo "<td>&nbsp;</td>";

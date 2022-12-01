@@ -1,7 +1,7 @@
 <?php 
 // session_start();
 include ('database/include.php');
-$uniqueId =  2;
+$uniqueId =  $_SESSION['userId'];
 if(isset($_POST['addEnrollDetails'])){
     $fname = $_POST['s_fname'];
     $mname = $_POST['s_mname'];
